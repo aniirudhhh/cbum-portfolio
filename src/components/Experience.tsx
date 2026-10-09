@@ -1,4 +1,5 @@
 import { experience } from "@/data/portfolio";
+import ScrollReveal from "@/components/ScrollReveal/ScrollReveal";
 
 export function Experience() {
   return (
@@ -10,9 +11,15 @@ export function Experience() {
             <div className="px-4 py-1.5 rounded-full border border-black/10 text-xs font-bold uppercase tracking-wider mb-8 bg-background">
               Experience
             </div>
-            <h2 className="text-4xl md:text-5xl font-medium tracking-tight leading-[1.1]">
+            <ScrollReveal 
+              baseOpacity={0} 
+              enableBlur={true} 
+              baseRotation={5} 
+              blurStrength={10}
+              containerClassName="text-4xl md:text-5xl font-medium tracking-tight leading-[1.1] text-foreground m-0"
+            >
               Hands-on experience. Practical lessons.
-            </h2>
+            </ScrollReveal>
           </div>
           <div className="w-full md:w-1/2 md:pt-20">
             <p className="text-lg font-medium text-foreground/70 leading-relaxed">

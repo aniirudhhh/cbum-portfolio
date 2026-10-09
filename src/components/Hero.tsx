@@ -40,14 +40,39 @@ export function Hero() {
         delay: 0.8
       });
 
-      gsap.from(".hero-badge", {
-        scale: 0.8,
-        opacity: 0,
-        duration: 1,
-        ease: "back.out(1.7)",
-        delay: 1.2
-      });
+      // Mouse parallax setup
+      const xToCursive = gsap.quickTo(".hero-cursive", "x", { duration: 1.5, ease: "power2.out" });
+      const yToCursive = gsap.quickTo(".hero-cursive", "y", { duration: 1.5, ease: "power2.out" });
+      
+      const xToPortrait = gsap.quickTo(".hero-portrait", "x", { duration: 2, ease: "power2.out" });
+      const yToPortrait = gsap.quickTo(".hero-portrait", "y", { duration: 2, ease: "power2.out" });
+
+      const handleMouseMove = (e: MouseEvent) => {
+        const { clientX, clientY } = e;
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        
+        // Normalized coordinates (-1 to +1)
+        const xPos = (clientX - centerX) / centerX;
+        const yPos = (clientY - centerY) / centerY;
+
+        // Cursive moves in opposite direction
+        xToCursive(xPos * -35);
+        yToCursive(yPos * -15);
+        
+        // Portrait moves slightly in the same direction
+        xToPortrait(xPos * 20);
+        yToPortrait(yPos * 10);
+      };
+
+      window.addEventListener("mousemove", handleMouseMove);
+
+      // Return a custom cleanup function for the context
+      return () => {
+        window.removeEventListener("mousemove", handleMouseMove);
+      };
     }, container);
+    
     return () => ctx.revert();
   }, []);
 
@@ -56,7 +81,7 @@ export function Hero() {
 
       {/* Background Cursive Text */}
       <div className="absolute top-[105px] mt-0 md:top-[25%] md:-mt-[40px] w-full flex justify-center pointer-events-none z-0 px-4">
-        <h1 className="hero-cursive text-[3.25rem] sm:text-[5rem] md:text-[clamp(5rem,18vw,16rem)] font-serif italic font-light text-foreground/30 tracking-tighter leading-none whitespace-nowrap" style={{ fontFamily: "Georgia, Times New Roman, serif" }}>
+        <h1 className="hero-cursive font-display text-[3.25rem] sm:text-[5rem] md:text-[clamp(5rem,18vw,16rem)] italic font-light text-foreground/30 tracking-tighter leading-none whitespace-nowrap">
           Hey there.
         </h1>
       </div>
@@ -81,20 +106,14 @@ export function Hero() {
         
         {/* Left / Top Text */}
         <div className="hero-text-left mt-0 md:absolute md:bottom-[8%] md:left-12 lg:left-24 flex flex-col items-start mb-2 md:mb-0">
-          <h2 
-            className="text-[3.5rem] leading-[0.9] md:text-[clamp(4rem,7.5vw,6.5rem)] font-bold tracking-tight md:leading-[0.85] uppercase text-foreground"
-            style={{ fontFamily: "'Inter', 'Helvetica Neue', Helvetica, sans-serif" }}
-          >
+          <h2 className="font-display text-[3.5rem] leading-[0.9] md:text-[clamp(4rem,7.5vw,6.5rem)] font-bold tracking-tight md:leading-[0.85] uppercase text-foreground">
             I AM <br /> SHIVAM
           </h2>
         </div>
 
         {/* Right / Bottom Text */}
         <div className="hero-text-right md:absolute md:bottom-[8%] md:right-12 lg:right-24 flex flex-col items-start md:text-left">
-          <h2 
-            className="text-[1.1rem] leading-snug md:text-[clamp(1.2rem,2.2vw,2.2rem)] font-bold tracking-tight md:leading-tight uppercase text-foreground/80 md:text-foreground md:max-w-[300px]"
-            style={{ fontFamily: "'Inter', 'Helvetica Neue', Helvetica, sans-serif" }}
-          >
+          <h2 className="font-display text-[1.1rem] leading-snug md:text-[clamp(1.2rem,2.2vw,2.2rem)] font-bold tracking-tight md:leading-tight uppercase text-foreground/80 md:text-foreground md:max-w-[300px]">
             Product <span className="md:hidden">•</span><br className="hidden md:block"/> Growth <span className="md:hidden">•</span><br className="hidden md:block"/> Analytics
           </h2>
         </div>

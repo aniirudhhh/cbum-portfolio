@@ -82,12 +82,12 @@ export function Loader() {
       {/* Bottom Row */}
       <div className="flex justify-between items-end">
         <div className="overflow-hidden">
-          <h1 className="loader-text-inner translate-y-[100%] text-[clamp(2.5rem,8vw,7rem)] font-bold tracking-tighter leading-[0.85] uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>
+          <h1 className="loader-text-inner font-display translate-y-[100%] text-[clamp(2.5rem,8vw,7rem)] font-bold tracking-tighter leading-[0.85] uppercase">
             PRODUCT <br /> PORTFOLIO
           </h1>
         </div>
         <div className="overflow-hidden">
-          <h1 className="loader-text-inner translate-y-[100%] text-[clamp(3rem,8vw,7rem)] font-bold tracking-tighter leading-none" style={{ fontFamily: "'Inter', sans-serif" }}>
+          <h1 className="loader-text-inner font-display translate-y-[100%] text-[clamp(3rem,8vw,7rem)] font-bold tracking-tighter leading-none">
             {progress.toString().padStart(3, '0')}%
           </h1>
         </div>

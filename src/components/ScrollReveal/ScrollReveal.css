@@ -1,0 +1,12 @@
+.scroll-reveal {
+  /* margin: 20px 0; Removed to prevent layout shifts */
+}
+
+.scroll-reveal-text {
+  /* Removed hardcoded sizes to let it inherit portfolio typography */
+}
+
+.word {
+  display: inline-block;
+  white-space: pre-wrap; 
+}

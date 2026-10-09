@@ -7,13 +7,16 @@
   --color-card-soft: #F5F5F3;
   --color-muted: #686868;
   --color-border: rgba(0, 0, 0, 0.10);
-  --font-sans: 'Satoshi', var(--font-geist-sans), sans-serif;
+  --font-sans: 'Google Sans Flex Variable', sans-serif;
+  --font-display: var(--font-montserrat), sans-serif;
   --container-max: 1480px;
 }
 
 :root {
   --background: #F7F7F5;
   --foreground: #111111;
+  /* Enforce rounded appearance for Google Sans Flex */
+  font-variation-settings: "ROND" 100;
 }
 
 body {

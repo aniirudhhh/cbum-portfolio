@@ -1,6 +1,8 @@
 "use client";
 
 import { ArrowUpRight } from "lucide-react";
+import ScrollReveal from "@/components/ScrollReveal/ScrollReveal";
+import { LiveTime } from "@/components/LiveTime";
 
 export function Contact() {
   return (
@@ -9,15 +11,21 @@ export function Contact() {
       {/* Left Side */}
       <div className="w-full md:w-1/2 flex flex-col justify-between">
         <div className="flex flex-col gap-6">
-          <h2 className="text-5xl md:text-7xl lg:text-[7rem] font-bold tracking-tighter leading-[0.9] uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>
-            Let’s <br /> Connect
-          </h2>
+          <ScrollReveal 
+            baseOpacity={0} 
+            enableBlur={true} 
+            baseRotation={5} 
+            blurStrength={10}
+            containerClassName="font-display text-5xl md:text-7xl lg:text-[7rem] font-bold tracking-tighter leading-[0.9] uppercase text-foreground m-0"
+          >
+            {"Let’s\nConnect"}
+          </ScrollReveal>
           <p className="text-base font-medium text-foreground/60 max-w-sm mt-4 leading-relaxed">
             Hiring for a product, growth or analytics role—or working on an interesting problem? I’d love to connect.
           </p>
         </div>
 
-        <div className="mt-8 md:mt-16 flex flex-col items-start gap-4">
+        <div className="mt-8 md:mt-16 flex flex-col items-start gap-8">
           <a 
             href="mailto:shivamkr026@gmail.com"
             className="flex items-center gap-4 bg-transparent hover:bg-black/5 transition-colors rounded-full p-2 pr-6 border border-black/10"
@@ -27,6 +35,7 @@ export function Contact() {
             </div>
             <span className="font-semibold text-xs tracking-wider uppercase text-foreground">shivamkr026@gmail.com</span>
           </a>
+          <LiveTime />
         </div>
       </div>
 

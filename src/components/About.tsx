@@ -1,4 +1,6 @@
 import { metrics } from "@/data/portfolio";
+import ScrollReveal from "@/components/ScrollReveal/ScrollReveal";
+import { AnimatedCounter } from "@/components/AnimatedCounter";
 
 export function About() {
   return (
@@ -9,9 +11,15 @@ export function About() {
           <div className="px-4 py-1.5 rounded-full border border-black/10 text-xs font-bold uppercase tracking-wider mb-8">
             About Me
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.1] max-w-lg">
+          <ScrollReveal 
+            baseOpacity={0} 
+            enableBlur={true} 
+            baseRotation={5} 
+            blurStrength={10}
+            containerClassName="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.1] max-w-lg text-foreground m-0"
+          >
             I like finding the point where users, data and business meet.
-          </h2>
+          </ScrollReveal>
         </div>
         
         <div className="w-full md:w-1/2 md:pt-16">
@@ -48,9 +56,10 @@ export function About() {
         <div className="w-full md:w-[35%] lg:w-[30%] flex flex-col gap-8 justify-center">
           {metrics.slice(0, 3).map((metric, index) => (
             <div key={index} className="flex flex-col">
-              <div className="text-5xl lg:text-6xl font-medium tracking-tighter mb-2">
-                {metric.value}
-              </div>
+              <AnimatedCounter 
+                value={metric.value} 
+                className="text-5xl lg:text-6xl font-medium tracking-tighter mb-2" 
+              />
               <p className="text-sm font-medium text-muted max-w-[200px] leading-tight">
                 {metric.label}
               </p>

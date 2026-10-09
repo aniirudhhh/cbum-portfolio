@@ -93,9 +93,18 @@ export const toolkit = {
 };
 
 export const interests = [
-  "Consumer Psychology",
-  "Emerging Tech",
-  "Generative AI Products"
+  {
+    title: "Consumer Psychology",
+    description: "Understanding why people make choices and how behavioral principles shape user experiences and brand perception."
+  },
+  {
+    title: "Emerging Tech",
+    description: "Keeping a pulse on new frameworks, platforms, and technological shifts that change how we build and interact with software."
+  },
+  {
+    title: "Generative AI Products",
+    description: "Exploring practical applications of LLMs, from intelligent agents to automated workflows that solve real business problems."
+  }
 ];
 
 export const marqueeTools = [

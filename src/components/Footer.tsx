@@ -81,8 +81,7 @@ export function Footer() {
       <div className="w-full flex justify-center items-end overflow-hidden leading-none select-none pointer-events-none">
         <h1 
           ref={textRef}
-          className="text-[clamp(4rem,15vw,20rem)] font-black uppercase tracking-tighter text-white/[0.04] m-0 p-0 leading-[0.75] text-center w-full" 
-          style={{ fontFamily: "'Inter', sans-serif" }}
+          className="font-display text-[clamp(4rem,15vw,20rem)] font-black uppercase tracking-tighter text-white/[0.04] m-0 p-0 leading-[0.75] text-center w-full" 
         >
           SHIVAM
         </h1>
