@@ -1,26 +1,61 @@
 @import "tailwindcss";
 
+@theme {
+  --color-background: #F7F7F5;
+  --color-foreground: #111111;
+  --color-section-dark: #0F0F0F;
+  --color-card-soft: #F5F5F3;
+  --color-muted: #686868;
+  --color-border: rgba(0, 0, 0, 0.10);
+  --font-sans: 'Satoshi', var(--font-geist-sans), sans-serif;
+  --container-max: 1480px;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #F7F7F5;
+  --foreground: #111111;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+.thin-border {
+  border: 1px solid var(--color-border);
+}
+.thin-border-t {
+  border-top: 1px solid var(--color-border);
+}
+.thin-border-b {
+  border-bottom: 1px solid var(--color-border);
+}
+.thin-border-x {
+  border-left: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
+}
+.thin-border-y {
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Base styles for Lenis smooth scrolling */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
 }
