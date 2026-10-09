@@ -9,6 +9,7 @@ import { ToolStrip } from "@/components/ToolStrip";
 import { About } from "@/components/About";
 import { Expertise } from "@/components/Expertise";
 import { Experience } from "@/components/Experience";
+import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { Education } from "@/components/Education";
 import { Certifications } from "@/components/Certifications";
 import { Toolkit } from "@/components/Toolkit";
@@ -23,14 +24,14 @@ export default function Home() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     
-    if (!container.current) return;
+    if (!container.current || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     
     const ctx = gsap.context(() => {
-      // Global stagger reveal for text and elements within sections (skipping hero which has its own)
-      const sections = gsap.utils.toArray('section:not(#hero)');
+      // Global stagger reveal for text and elements within sections (skipping hero and projects which have their own)
+      const sections = gsap.utils.toArray<HTMLElement>('section:not(#hero):not(#projects)');
       
-      sections.forEach((sec: any) => {
-        const elements = sec.querySelectorAll('h2, h3, h4, p, li, img, a, button, .stagger-box');
+      sections.forEach((sec) => {
+        const elements = sec.querySelectorAll('h2:not(.scroll-reveal), h3, h4, p, li, img, a, button, .stagger-box');
         
         if (elements.length > 0) {
           gsap.from(elements, {
@@ -56,8 +57,10 @@ export default function Home() {
     <div ref={container} className="bg-background flex flex-col items-center">
       <div className="w-full max-w-[1480px] px-4 md:px-8 lg:px-12 flex flex-col relative">
         <Navbar />
+        <main id="main-content" tabIndex={-1}>
         <Hero />
         <ToolStrip />
+        <FeaturedProjects />
         <About />
         <Expertise />
         <Experience />
@@ -66,6 +69,7 @@ export default function Home() {
         <Toolkit />
         <Interests />
         <Philosophy />
+        </main>
       </div>
 
       {/* Contact */}

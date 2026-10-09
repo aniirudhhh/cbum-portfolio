@@ -6,12 +6,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export function Footer() {
   const container = useRef<HTMLElement>(null);
-  const textRef = useRef<HTMLHeadingElement>(null);
+  const textRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     
-    if (!container.current || !textRef.current) return;
+    if (!container.current || !textRef.current || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const ctx = gsap.context(() => {
       // Parallax effect on the giant text as you scroll into the footer
@@ -59,11 +59,12 @@ export function Footer() {
             <span className="text-[10px] font-bold uppercase tracking-widest text-white/60 mb-2">Socials</span>
             <a href="https://linkedin.com/in/shivamkr026" target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:text-white/70 transition-colors">LinkedIn</a>
             <a href="mailto:shivamkr026@gmail.com" className="text-sm font-medium hover:text-white/70 transition-colors">Email</a>
-            <a href="#" className="text-sm font-medium hover:text-white/70 transition-colors">Resume</a>
+            <a href="mailto:shivamkr026@gmail.com?subject=Resume%20request" className="text-sm font-medium hover:text-white/70 transition-colors">Request résumé</a>
           </div>
           
           <div className="flex flex-col gap-4">
             <span className="text-[10px] font-bold uppercase tracking-widest text-white/60 mb-2">Sitemap</span>
+            <a href="#projects" className="text-sm font-medium hover:text-white/70 transition-colors">Work</a>
             <a href="#about" className="text-sm font-medium hover:text-white/70 transition-colors">About</a>
             <a href="#experience" className="text-sm font-medium hover:text-white/70 transition-colors">Experience</a>
             <a href="#expertise" className="text-sm font-medium hover:text-white/70 transition-colors">Expertise</a>
@@ -79,12 +80,12 @@ export function Footer() {
 
       {/* Massive Background Text */}
       <div className="w-full flex justify-center items-end overflow-hidden leading-none select-none pointer-events-none">
-        <h1 
+        <p aria-hidden="true"
           ref={textRef}
           className="font-display text-[clamp(4rem,15vw,20rem)] font-black uppercase tracking-tighter text-white/[0.04] m-0 p-0 leading-[0.75] text-center w-full" 
         >
           SHIVAM
-        </h1>
+        </p>
       </div>
     </footer>
   );

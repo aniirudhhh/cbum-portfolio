@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Shivam Kumar — Portfolio
 
-## Getting Started
+Next.js portfolio with featured work, experience, skills and direct email contact.
 
-First, run the development server:
+## Development
 
-```bash
+```sh
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Checks
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+npm run lint
+npx tsc --noEmit
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+If the local Turbopack CSS worker fails to start, use the supported alternative:
 
-## Learn More
+```sh
+npm run build -- --webpack
+```
 
-To learn more about Next.js, take a look at the following resources:
+The existing Montserrat font setup requires Google Fonts access at build time.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Set `NEXT_PUBLIC_SITE_URL` to your public HTTPS origin before building, for example `https://your-domain.example`. On Vercel, `VERCEL_PROJECT_PRODUCTION_URL` is used automatically if no explicit URL is set. Local development falls back to `http://localhost:3000`. The origin is used for social preview image URLs.
 
-## Deploy on Vercel
+## Content and contact
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Shared biography, experience and skills: `src/data/portfolio.ts`.
+- Case-study narratives: `src/components/FeaturedProjects.tsx`.
+- Contact opens the visitor’s email app; copying the address is also supported. No message is sent by the website itself.
+- The résumé action requests a copy by email. Replace it with a real PDF link when an approved résumé is available.
+- Add genuine project screenshots and supporting documents when available; avoid publishing invented metrics or evidence.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The site includes a generated social preview, an SK favicon, keyboard-friendly mobile navigation and reduced-motion handling.

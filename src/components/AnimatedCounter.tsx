@@ -24,7 +24,7 @@ export function AnimatedCounter({ value, className = "" }: AnimatedCounterProps)
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     
-    if (!containerRef.current || !numberRef.current) return;
+    if (!containerRef.current || !numberRef.current || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     
     const obj = { val: 0 };
     
@@ -57,7 +57,7 @@ export function AnimatedCounter({ value, className = "" }: AnimatedCounterProps)
   return (
     <div ref={containerRef} className={className}>
       {prefix}
-      <span ref={numberRef}>0</span>
+      <span ref={numberRef}>{targetNumber}</span>
       {suffix}
     </div>
   );

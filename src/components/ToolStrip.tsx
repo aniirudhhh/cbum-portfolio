@@ -36,7 +36,7 @@ export function ToolStrip() {
   const rowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!rowRef.current) return;
+    if (!rowRef.current || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     // Create the marquee timeline
     const tl = gsap.to(rowRef.current, {
@@ -50,7 +50,7 @@ export function ToolStrip() {
     let scrollTimeout: NodeJS.Timeout;
     
     // Use ScrollTrigger to detect scroll velocity globally
-    ScrollTrigger.create({
+    const trigger = ScrollTrigger.create({
       start: 0,
       end: "max",
       onUpdate: (self) => {
@@ -80,6 +80,9 @@ export function ToolStrip() {
     });
 
     return () => {
+      clearTimeout(scrollTimeout);
+      trigger.kill();
+      gsap.killTweensOf(tl);
       tl.kill();
     };
   }, []);
