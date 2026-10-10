@@ -73,7 +73,7 @@ export default function Home() {
       </div>
 
       {/* Contact */}
-      <div className="w-full bg-background flex flex-col items-center border-t border-black/5 mt-12">
+      <div className="w-full bg-background flex flex-col items-center">
         <div className="w-full max-w-[1480px] px-4 md:px-8 lg:px-12">
           <Contact />
         </div>
