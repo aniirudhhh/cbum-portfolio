@@ -8,13 +8,13 @@ export function Experience() {
         {/* Header */}
         <div className="flex flex-col md:flex-row gap-6 md:gap-16 items-start mb-10 md:mb-16">
           <div className="w-full md:w-1/2 flex flex-col items-start">
-            <div className="px-4 py-1.5 rounded-full border border-black/10 text-xs font-bold uppercase tracking-wider mb-8 bg-background">
+            <div className="px-4 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-xs font-bold uppercase tracking-wider mb-8 bg-black/5 dark:bg-white/10 text-foreground">
               Experience
             </div>
-            <ScrollReveal 
-              baseOpacity={0} 
-              enableBlur={true} 
-              baseRotation={5} 
+            <ScrollReveal
+              baseOpacity={0}
+              enableBlur={true}
+              baseRotation={5}
               blurStrength={10}
               containerClassName="text-4xl md:text-5xl font-medium tracking-tight leading-[1.1] text-foreground m-0"
             >
@@ -31,9 +31,9 @@ export function Experience() {
         {/* Rows */}
         <div className="flex flex-col border-t border-[rgba(0,0,0,0.08)]">
           {experience.map((item) => (
-            <div 
+            <div
               key={item.id}
-              className="group flex flex-col md:flex-row justify-between md:items-center py-8 md:py-12 border-b border-[rgba(0,0,0,0.08)] hover:bg-black/[0.02] transition-colors -mx-4 px-4 md:-mx-8 md:px-8 lg:-mx-12 lg:px-12 cursor-default"
+              className="group flex flex-col md:flex-row justify-between md:items-center py-5 md:py-12 border-b border-[rgba(0,0,0,0.08)] hover:bg-black/[0.02] transition-colors -mx-4 px-4 md:-mx-8 md:px-8 lg:-mx-12 lg:px-12 cursor-default"
             >
               <div className="w-full md:w-2/3 flex flex-col md:pr-8 mb-4 md:mb-0">
                 <h3 className={`text-xl md:text-2xl font-bold tracking-tight mb-2 ${item.highlight ? "text-foreground" : "text-foreground/90"}`}>

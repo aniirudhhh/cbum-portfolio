@@ -17,22 +17,23 @@ import { Interests } from "@/components/Interests";
 import { Philosophy } from "@/components/Philosophy";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
+import { ScrollProgress } from "@/components/ScrollProgress";
 
 export default function Home() {
   const container = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    
+
     if (!container.current || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    
+
     const ctx = gsap.context(() => {
       // Global stagger reveal for text and elements within sections (skipping hero and projects which have their own)
       const sections = gsap.utils.toArray<HTMLElement>('section:not(#hero):not(#projects)');
-      
+
       sections.forEach((sec) => {
         const elements = sec.querySelectorAll('h2:not(.scroll-reveal), h3, h4, p, li, img, a, button, .stagger-box');
-        
+
         if (elements.length > 0) {
           gsap.from(elements, {
             y: 40,
@@ -49,12 +50,12 @@ export default function Home() {
         }
       });
     }, container);
-    
+
     return () => ctx.revert();
   }, []);
 
   return (
-    <div ref={container} className="bg-background flex flex-col items-center">
+    <div ref={container} className="bg-background flex flex-col items-center overflow-x-clip w-full">
       <div className="w-full max-w-[1480px] px-4 md:px-8 lg:px-12 flex flex-col relative">
         <Navbar />
         <main id="main-content" tabIndex={-1}>
@@ -85,6 +86,8 @@ export default function Home() {
           <Footer />
         </div>
       </div>
+
+      <ScrollProgress />
     </div>
   );
 }

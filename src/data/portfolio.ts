@@ -1,3 +1,15 @@
+export const portfolioFacts = [
+  "Shivam brings hands-on business experience to product, growth and analytics problems.",
+  "Shivam co-founded LightBite, a profitable food venture that served over 300 customers.",
+  "At LightBite, Shivam managed over 25 SKUs while coordinating vendors and B2B outreach.",
+  "At Numero Uno, Shivam published over 16 SEO articles and created over 7 visual creatives.",
+  "Shivam used GA4 and Google Business Profile to monitor website activity during his marketing internship.",
+  "At Jyothi Wood Trading Company, Shivam audited inventory and supported billing and dispatch workflows.",
+  "Shivam studied Business Administration with a specialization in Data Analytics and Marketing in Bangalore.",
+  "Shivam completed AI Product Management training through IIT Roorkee iHUB and Masai.",
+  "Shivam is interested in consumer psychology and practical applications of generative AI.",
+];
+
 export const metrics = [
   { value: "300+", label: "Unique customers served at LightBite" },
   { value: "25+", label: "Active SKUs managed" },
@@ -9,21 +21,25 @@ export const expertise = [
   {
     title: "Product Management",
     description: "Turn customer problems into clear requirements, user journeys and testable product ideas, drawing on my product management training.",
+    detail: "For ZeptoAssist AI, an AI product management case study completed through IIT Roorkee iHUB x Masai, I analyzed post-delivery support complaints and wrote the PRD, user stories and risk mitigation matrix. I also defined experimentation metrics, an A/B testing framework and a phased rollout plan. This was a training project and prototype, rather than a live product launch.",
     dark: false
   },
   {
     title: "AI & Systems",
     description: "Explore how language models, retrieval and prompt design can support practical workflows and early product prototypes.",
+    detail: "In the ZeptoAssist AI case study, I designed an LLM and RAG workflow to triage post-delivery support issues and built a functional prototype using Lovable.dev, Claude API and Make.com. The work explored how relevant information could support automated responses and faster issue handling; it does not represent a deployed system or verified production results.",
     dark: false
   },
   {
     title: "Digital Marketing",
     description: "Create search-focused content and visual creatives, manage publishing, and support audience targeting and campaign testing.",
+    detail: "During my internship at Numero Uno Marketing, I worked on SEO campaigns for Fit24 and Vitalyears, published 16+ optimized articles and created 7+ visual creatives using Canva and Figma. I managed WordPress content updates, monitored search traffic and interaction trends, and assisted with audience segmentation and creative testing on Meta Ads.",
     dark: true
   },
   {
     title: "Analytics & Operations",
     description: "Monitor website activity in GA4, check inventory and billing records, and coordinate sales and dispatch workflows.",
+    detail: "At Numero Uno Marketing, I used Google Analytics and Google Business Profile to monitor traffic and interactions. At Jyothi Wood Trading Company, I checked physical inventory against billing records, used standardized checklists and coordinated sales and dispatch handoffs. Running LightBite also gave me practical experience managing 25+ active SKUs and vendor supply for a food venture serving 300+ customers.",
     dark: false
   }
 ];
@@ -62,25 +78,29 @@ export const education = [
     institution: "T. John Group of Institutions, Bangalore",
     specialization: "Data Analytics & Marketing",
     graduated: "2026",
-    cgpa: "7.85"
+    cgpa: "7.85",
+    detail: "I completed my BBA at T. John Group of Institutions in Bangalore in 2026, specializing in Data Analytics and Marketing, with a CGPA of 7.85. My portfolio brings that academic focus together with experience in digital marketing, business operations and co-founding LightBite."
   },
   {
     degree: "Higher Secondary",
     institution: "Sardar Patel Memorial College, Nalanda",
     board: "Bihar School Examination Board",
     stream: "PCMB",
-    years: "2021 — 2023"
+    years: "2021 — 2023",
+    detail: "I studied Physics, Chemistry, Mathematics and Biology at Sardar Patel Memorial College in Nalanda from 2021 to 2023, under the Bihar School Examination Board. I later pursued Business Administration with a specialization in Data Analytics and Marketing."
   }
 ];
 
 export const certifications = [
   {
     title: "AI Product Management Certification",
-    issuer: "IIT Roorkee iHUB x Masai"
+    issuer: "IIT Roorkee iHUB x Masai",
+    detail: "My AI Product Management training included the ZeptoAssist AI case study. I wrote a PRD, user stories and a risk mitigation matrix, designed an LLM and RAG support workflow, and built a prototype using Lovable.dev, Claude API and Make.com. I also defined experimentation metrics and a phased rollout plan."
   },
   {
     title: "Google Analytics Certification",
-    issuer: "Great Learning"
+    issuer: "Great Learning",
+    detail: "I completed a Google Analytics certification through Great Learning. During my digital marketing internship at Numero Uno Marketing, I also monitored search traffic and interaction trends through Google Analytics and Google Business Profile to support content and campaign decisions."
   }
 ];
 

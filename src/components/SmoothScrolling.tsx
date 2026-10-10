@@ -1,7 +1,20 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
-import { ReactLenis } from "lenis/react";
+import { useEffect, useSyncExternalStore } from "react";
+import { ReactLenis, useLenis } from "lenis/react";
+import { useStartupComplete } from "@/lib/startup";
+
+function StartupScrollGuard() {
+  const lenis = useLenis();
+  const ready = useStartupComplete();
+  useEffect(() => {
+    if (!lenis) return;
+    lenis.scrollTo(0, { immediate: true, force: true });
+    if (ready) lenis.start();
+    else lenis.stop();
+  }, [lenis, ready]);
+  return null;
+}
 
 function subscribe(callback: () => void) {
   const query = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -11,6 +24,5 @@ function subscribe(callback: () => void) {
 
 export function SmoothScrolling({ children }: { children: React.ReactNode }) {
   const reducedMotion = useSyncExternalStore(subscribe, () => window.matchMedia("(prefers-reduced-motion: reduce)").matches, () => true);
-  if (reducedMotion) return <>{children}</>;
-  return <ReactLenis root options={{ lerp: 0.1, smoothWheel: true, anchors: true }}>{children}</ReactLenis>;
+  return <ReactLenis root options={{ lerp: 0.1, smoothWheel: !reducedMotion, anchors: true }}><StartupScrollGuard />{children}</ReactLenis>;
 }

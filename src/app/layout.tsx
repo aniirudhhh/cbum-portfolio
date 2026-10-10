@@ -3,6 +3,9 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { SmoothScrolling } from "@/components/SmoothScrolling";
 import { CustomCursor } from "@/components/CustomCursor";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { Loader } from "@/components/Loader";
+import { DeferredRobot } from "@/components/DeferredRobot";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -32,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link
           href="https://cdn.jsdelivr.net/npm/@fontsource-variable/google-sans-flex/index.css"
@@ -40,9 +43,13 @@ export default function RootLayout({
         />
       </head>
       <body className={`${montserrat.variable} antialiased font-sans text-foreground bg-background selection:bg-foreground selection:text-background`}>
-        <a href="#main-content" className="skip-link">Skip to content</a>
-        <CustomCursor />
-        <SmoothScrolling>{children}</SmoothScrolling>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Loader />
+          <a href="#main-content" className="skip-link">Skip to content</a>
+          <CustomCursor />
+          <DeferredRobot />
+          <SmoothScrolling>{children}</SmoothScrolling>
+        </ThemeProvider>
       </body>
     </html>
   );

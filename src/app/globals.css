@@ -1,22 +1,36 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #F7F7F5;
-  --color-foreground: #111111;
-  --color-section-dark: #0F0F0F;
-  --color-card-soft: #F5F5F3;
-  --color-muted: #686868;
-  --color-border: rgba(0, 0, 0, 0.10);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-section-dark: var(--section-dark);
+  --color-card-soft: var(--card-soft);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
   --font-sans: 'Google Sans Flex Variable', sans-serif;
   --font-display: var(--font-montserrat), sans-serif;
   --container-max: 1480px;
 }
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #F7F7F5;
   --foreground: #111111;
-  /* Enforce rounded appearance for Google Sans Flex */
+  --section-dark: #0F0F0F;
+  --card-soft: #F5F5F3;
+  --muted: #686868;
+  --border: rgba(0, 0, 0, 0.10);
   font-variation-settings: "ROND" 100;
+}
+
+.dark {
+  --background: #111111;
+  --foreground: #F7F7F5;
+  --section-dark: #050505;
+  --card-soft: #1A1A1A;
+  --muted: #A0A0A0;
+  --border: rgba(255, 255, 255, 0.10);
 }
 
 body {
@@ -47,6 +61,41 @@ body {
 }
 
 /* Base styles for Lenis smooth scrolling */
+.loader-overlay { will-change: transform; }
+@media (prefers-reduced-motion: no-preference) {
+  #hero[data-intro-pending="true"] :is(.hero-cursive, .hero-portrait, .hero-text-left, .hero-text-right) { opacity: 0; }
+}
+html[data-starting="true"] { scroll-behavior: auto !important; }
+html[data-starting="true"] body { overflow-anchor: none; }
+.loader-text-inner { animation: loader-text-enter 650ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.loader-counter { height: 1em; line-height: 1; overflow: hidden; }
+.loader-counter-strip { will-change: transform; }
+.loader-counter-strip span { display: block; height: 1em; line-height: 1; }
+.loader-overlay[data-counting="true"] .loader-counter-strip {
+  animation: loader-count 1600ms steps(100, end) forwards;
+}
+@keyframes loader-count {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(0, -100em, 0); }
+}
+.loader-overlay[data-leaving="true"] {
+  animation: loader-curtain-exit 850ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  pointer-events: none;
+}
+@keyframes loader-text-enter {
+  from { transform: translate3d(0, 110%, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+@keyframes loader-curtain-exit {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(0, -100%, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .loader-text-inner { animation-duration: 1ms; }
+  .loader-overlay[data-counting="true"] .loader-counter-strip { animation-duration: 1ms; }
+  .loader-overlay[data-leaving="true"] { animation-duration: 1ms; }
+}
+
 html.lenis, html.lenis body {
   height: auto;
 }
@@ -77,4 +126,101 @@ section[id] { scroll-margin-top: 6rem; }
 .mobile-menu::backdrop { background: #111; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+/* A small studio for the portfolio companion. */
+.robot-companion {
+  position: fixed;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: max(20px, env(safe-area-inset-bottom));
+  width: 200px;
+  z-index: 45;
+  pointer-events: none;
+}
+.robot-stage { position: relative; height: 220px; pointer-events: auto; cursor: grab; border-radius: 24px; touch-action: pan-y; }
+.robot-stage:active { cursor: grabbing; }
+.robot-stage canvas { position: relative; z-index: 1; touch-action: pan-y; }
+.robot-halo {
+  position: absolute; inset: 35px 8px 12px; border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(129, 210, 189, 0.19), rgba(129, 210, 189, 0) 70%);
+}
+.dark .robot-halo { background: radial-gradient(ellipse, rgba(129, 210, 189, 0.15), transparent 70%); }
+.robot-greet, .robot-restore, .robot-minimize {
+  pointer-events: auto; color: var(--foreground); border: 1px solid var(--border);
+  background: var(--background); box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  transition: transform 180ms ease, background 180ms ease;
+}
+.robot-greet {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  margin: -12px auto 0; position: relative; z-index: 2; border-radius: 100px;
+  padding: 10px 16px; font-size: 11px; font-weight: 600; letter-spacing: 0.02em;
+}
+.robot-greet:hover, .robot-restore:hover { transform: translateY(-2px); }
+.robot-about {
+  isolation: isolate; overflow: hidden; background: var(--foreground); color: var(--background);
+  border-color: color-mix(in srgb, var(--background) 22%, var(--foreground));
+  box-shadow: 0 5px 18px color-mix(in srgb, var(--foreground) 16%, transparent), inset 0 1px 0 color-mix(in srgb, var(--background) 18%, transparent);
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+.robot-about::before {
+  content: ""; position: absolute; inset: -60% -30%; z-index: -1; pointer-events: none;
+  background: linear-gradient(110deg, transparent 35%, color-mix(in srgb, var(--background) 24%, transparent) 48%, transparent 60%);
+  transform: translateX(-100%); transition: transform 650ms ease;
+}
+.robot-about:active { transform: translateY(0) scale(0.96); }
+@media (hover: hover) and (pointer: fine) {
+  .robot-about:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--background) 50%, var(--foreground));
+    box-shadow: 0 9px 24px color-mix(in srgb, var(--foreground) 22%, transparent), inset 0 1px 0 color-mix(in srgb, var(--background) 30%, transparent);
+  }
+  .robot-about:hover::before { transform: translateX(100%); }
+}
+.robot-status-dot { width: 6px; height: 6px; background: #369b7a; border-radius: 50%; box-shadow: 0 0 0 3px rgba(54,155,122,0.1); }
+.robot-minimize { position: absolute; top: 18px; right: 0; z-index: 3; width: 28px; height: 28px; border-radius: 50%; font-size: 18px; }
+.robot-speech {
+  position: absolute; bottom: calc(100% + 4px); right: 0; width: 220px;
+  padding: 16px 18px; background: var(--foreground); color: var(--background);
+  border-radius: 18px 18px 4px 18px; font-size: 12px; line-height: 1.6;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.15); opacity: 0; transform: translateY(8px);
+  transition: opacity 200ms ease, transform 200ms ease; visibility: hidden;
+}
+.robot-speech[data-visible="true"] { opacity: 1; transform: translateY(0); visibility: visible; }
+.robot-restore { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; font-size: 24px; }
+.robot-companion.is-minimized { width: 44px; }
+.robot-loading { position: absolute; inset: 0; display: grid; place-items: center; font-size: 11px; color: var(--muted); }
+.robot-question-control { position: relative; min-height: 36px; margin-top: -12px; }
+.robot-question-control .robot-greet { margin-top: 0; }
+.robot-question-form {
+  position: absolute; bottom: 0; right: 0; display: flex; align-items: center;
+  width: min(320px, calc(100vw - 24px)); min-height: 48px; padding: 5px 6px 5px 9px; gap: 5px;
+  border-radius: 100px; pointer-events: auto;
+  background: color-mix(in srgb, var(--background) 92%, transparent); color: var(--foreground);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid color-mix(in srgb, var(--foreground) 14%, transparent);
+  box-shadow: 0 8px 28px rgba(0,0,0,.12), inset 0 1px 0 color-mix(in srgb, var(--foreground) 5%, transparent);
+  animation: robot-input-open 320ms cubic-bezier(.16,1,.3,1) both;
+  transform-origin: right center;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+.robot-question-form input { width: 0; flex: 1; min-width: 0; padding: 8px 8px; background: transparent; font-size: 13px; line-height: 1.4; letter-spacing: -.01em; outline: none; }
+.robot-question-form input::placeholder { color: var(--muted); opacity: .85; }
+.robot-question-form:focus-within { border-color: color-mix(in srgb, var(--foreground) 30%, transparent); box-shadow: 0 8px 28px rgba(0,0,0,.14), 0 0 0 3px color-mix(in srgb, var(--foreground) 4%, transparent); }
+.robot-question-form button { min-height: 36px; padding: 8px 16px; border-radius: 100px; font-size: 11px; font-weight: 600; letter-spacing: .02em; background: var(--foreground); color: var(--background); transition: opacity 180ms ease, transform 180ms ease; }
+.robot-question-form button:hover:not(:disabled) { opacity: .85; }
+.robot-question-form button:active:not(:disabled) { transform: scale(.96); }
+.robot-question-form button:disabled { opacity: .3; cursor: default; }
+.robot-question-control[data-closing="true"] .robot-question-form { animation: robot-input-close 240ms cubic-bezier(.4,0,.2,1) both; pointer-events: none; }
+.robot-question-control .robot-greet { animation: robot-button-return 220ms ease-out both; }
+@keyframes robot-input-open { from { opacity: 0; clip-path: inset(0 0 0 58% round 100px); transform: translateY(3px); } to { opacity: 1; clip-path: inset(0 0 0 0 round 100px); transform: translateY(0); } }
+@keyframes robot-input-close { from { opacity: 1; clip-path: inset(0 0 0 0 round 100px); transform: translateY(0); } to { opacity: 0; clip-path: inset(0 0 0 58% round 100px); transform: translateY(3px); } }
+@keyframes robot-button-return { from { opacity: 0; scale: .94; } to { opacity: 1; scale: 1; } }
+@media (max-width: 767px) {
+  .robot-companion { width: 104px; right: max(10px, env(safe-area-inset-right)); bottom: max(10px, env(safe-area-inset-bottom)); }
+  .robot-stage { height: 116px; }
+  .robot-greet { min-height: 32px; margin-top: -8px; padding: 7px 12px; gap: 7px; font-size: 10px; }
+  .robot-minimize { top: 4px; width: 26px; height: 26px; }
+  .robot-speech { width: 190px; max-width: calc(100vw - 20px); padding: 12px 14px; }
+  .robot-question-control { margin-top: -8px; min-height: 32px; }
+  .robot-question-form input { font-size: 16px; }
 }

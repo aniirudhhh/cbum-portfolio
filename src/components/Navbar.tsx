@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useLenis } from "lenis/react";
+import { MagneticButton } from "@/components/MagneticButton";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const links = [
   { href: "#projects", label: "Work" },
@@ -51,25 +53,34 @@ export function Navbar() {
             {links.map(link => <a key={link.href} href={link.href} className="hover:opacity-60 transition-opacity">{link.label}</a>)}
           </div>
           <div className="flex items-center gap-4">
-            <a href="#contact" className="hidden sm:inline-flex items-center justify-center bg-foreground text-background font-bold tracking-widest uppercase text-xs px-6 py-3 rounded-[2px] hover:bg-black/80 transition-colors">Let&apos;s Talk</a>
-            <button ref={toggleRef} type="button" aria-label="Open menu" aria-expanded={isOpen} aria-controls="mobile-menu" onClick={() => { menuRef.current?.showModal(); setIsOpen(true); }} className="md:hidden flex flex-col justify-center items-end gap-[5px] w-11 h-11">
-              <span className="h-0.5 w-6 bg-foreground" />
-              <span className="h-0.5 w-4 bg-foreground" />
-              <span className="h-0.5 w-6 bg-foreground" />
-            </button>
+            <div className="hidden md:block"><ThemeToggle /></div>
+            <div className="hidden md:block"><MagneticButton>
+              <a href="#contact" className="inline-flex items-center justify-center bg-foreground text-background font-bold tracking-widest uppercase text-xs px-6 py-3 rounded-[2px] hover:bg-black/80 dark:hover:bg-white/80 transition-colors">Let&apos;s Talk</a>
+            </MagneticButton></div>
+            <div className="md:hidden"><MagneticButton>
+              <button ref={toggleRef} type="button" aria-label="Open menu" aria-expanded={isOpen} aria-controls="mobile-menu" onClick={() => { menuRef.current?.showModal(); setIsOpen(true); }} className="flex flex-col justify-center items-end gap-[5px] w-11 h-11">
+                <span className="h-0.5 w-6 bg-foreground" />
+                <span className="h-0.5 w-4 bg-foreground" />
+                <span className="h-0.5 w-6 bg-foreground" />
+              </button>
+            </MagneticButton></div>
           </div>
         </div>
       </nav>
-      <dialog ref={menuRef} id="mobile-menu" aria-label="Navigation menu" data-lenis-prevent onClose={() => { setIsOpen(false); toggleRef.current?.focus(); }} className="mobile-menu bg-[#111111] text-[#F7F7F5] p-6 sm:p-12">
+      <dialog ref={menuRef} id="mobile-menu" aria-label="Navigation menu" data-lenis-prevent onClose={() => { setIsOpen(false); toggleRef.current?.focus(); }} className="mobile-menu bg-background text-foreground p-6 sm:p-12">
         <div className="flex items-center justify-between mb-12">
           <span className="font-bold text-lg">SHIVAM</span>
           <button type="button" onClick={closeMenu} className="min-h-11 px-3 font-semibold">Close ✕</button>
         </div>
         <nav aria-label="Mobile navigation" className="flex flex-col gap-6">
-          {[...links, { href: "#contact", label: "Contact" }].map(link => (
-            <a key={link.href} href={link.href} onClick={closeMenu} className="text-4xl sm:text-5xl font-black uppercase tracking-tighter hover:text-white/60">{link.label}</a>
+          {links.map(link => (
+            <a key={link.href} href={link.href} onClick={closeMenu} className="text-4xl sm:text-5xl font-black uppercase tracking-tighter hover:opacity-60">{link.label}</a>
           ))}
         </nav>
+        <div className="mt-10 flex items-center justify-between gap-4 border-t border-border pt-6">
+          <ThemeToggle />
+          <a href="#contact" onClick={closeMenu} className="inline-flex items-center justify-center bg-foreground text-background font-bold tracking-widest uppercase text-xs px-6 py-3 rounded-[2px] hover:opacity-80 transition-opacity">Let&apos;s Talk</a>
+        </div>
       </dialog>
     </>
   );

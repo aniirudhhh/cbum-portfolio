@@ -1,25 +1,28 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import Image from "next/image";
 import portrait from "../../public/shivam-portrait-3d-original.png";
+import { MagneticButton } from "@/components/MagneticButton";
+import { useStartupComplete } from "@/lib/startup";
 
 export function Hero() {
   const container = useRef<HTMLDivElement>(null);
+  const startupComplete = useStartupComplete();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const hero = container.current;
-    if (!hero) return;
+    if (!hero || !startupComplete) return;
     const media = gsap.matchMedia();
 
     media.add("(prefers-reduced-motion: no-preference)", () => {
       const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
       intro
-        .from(".hero-cursive", { y: 24, opacity: 0, duration: 1.2 }, 0)
-        .from(".hero-portrait", { y: 45, opacity: 0, duration: 1.4 }, 0.15)
-        .from(".hero-text-left", { x: -24, opacity: 0, duration: 1.1 }, 0.35)
-        .from(".hero-text-right", { x: 24, opacity: 0, duration: 1.1 }, 0.45);
+        .fromTo(".hero-cursive", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2 }, 0)
+        .fromTo(".hero-portrait", { y: 45, opacity: 0 }, { y: 0, opacity: 1, duration: 1.4 }, 0.15)
+        .fromTo(".hero-text-left", { x: -24, opacity: 0 }, { x: 0, opacity: 1, duration: 1.1 }, 0.35)
+        .fromTo(".hero-text-right", { x: 24, opacity: 0 }, { x: 0, opacity: 1, duration: 1.1 }, 0.45);
     }, hero);
 
     media.add("(hover: hover) and (pointer: fine) and (min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
@@ -70,10 +73,10 @@ export function Hero() {
     }, hero);
 
     return () => media.revert();
-  }, []);
+  }, [startupComplete]);
 
   return (
-    <section id="hero" ref={container} className="relative w-screen left-1/2 -translate-x-1/2 min-h-0 md:min-h-[100svh] flex flex-col items-center justify-start md:justify-end pt-[135px] md:pt-0 overflow-hidden bg-background">
+    <section id="hero" ref={container} data-intro-pending={!startupComplete} className="relative w-screen left-1/2 -translate-x-1/2 min-h-0 md:min-h-[100svh] flex flex-col items-center justify-start md:justify-end pt-[135px] md:pt-0 overflow-hidden bg-background">
 
       {/* Background Cursive Text */}
       <div className="absolute top-[105px] mt-0 md:top-[25%] md:-mt-[40px] w-full flex justify-center pointer-events-none z-0 px-4">
@@ -98,7 +101,7 @@ export function Hero() {
 
       {/* Responsive Text Container */}
       <div className="w-full max-w-[1480px] flex flex-col md:block z-20 px-6 sm:px-12 -mt-[72px] md:mt-0 pb-8 pt-0 md:p-0 shrink-0">
-        
+
         {/* Left / Top Text */}
         <div className="hero-text-left mt-0 md:absolute md:bottom-[8%] md:left-12 lg:left-24 flex flex-col items-start mb-2 md:mb-0">
           <h1 className="hero-depth-name font-display text-[3.5rem] leading-[0.9] md:text-[clamp(4rem,7.5vw,6.5rem)] font-bold tracking-tight md:leading-[0.85] uppercase text-foreground">
@@ -107,14 +110,16 @@ export function Hero() {
         </div>
 
         {/* Right / Bottom Text */}
-        <div className="hero-text-right md:absolute md:bottom-[8%] md:right-12 lg:right-24 flex flex-col items-start md:text-left">
+        <div className="hero-text-right md:absolute md:bottom-[8%] md:right-[220px] lg:right-[240px] flex flex-col items-start md:text-left">
           <h2 className="font-display text-[1.1rem] leading-snug md:text-[clamp(1.2rem,2.2vw,2.2rem)] font-bold tracking-tight md:leading-tight uppercase text-foreground/80 md:text-foreground md:max-w-[300px]">
             Product <span className="md:hidden">•</span><br className="hidden md:block"/> Growth <span className="md:hidden">•</span><br className="hidden md:block"/> Analytics
           </h2>
           <p className="mt-4 max-w-[260px] text-sm leading-relaxed text-foreground/70">
             Bringing hands-on experience in entrepreneurship, marketing and operations to product and growth problems.
           </p>
-          <a href="#projects" className="mt-5 inline-flex rounded-[2px] bg-foreground px-6 py-3 text-sm font-semibold text-background hover:bg-black/80 transition-colors">View my work</a>
+          <MagneticButton className="mt-5">
+            <a href="#projects" className="inline-flex rounded-[2px] bg-foreground px-6 py-3 text-sm font-semibold text-background hover:bg-black/80 dark:hover:bg-white/80 transition-colors">View my work</a>
+          </MagneticButton>
         </div>
 
       </div>
