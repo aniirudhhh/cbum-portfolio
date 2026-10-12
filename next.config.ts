@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  experimental: {
+    // Build caches can persist server environment values in deployment artifacts.
+    turbopackFileSystemCacheForBuild: false,
+  },
 };
 
 export default nextConfig;
