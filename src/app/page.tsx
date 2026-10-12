@@ -32,7 +32,7 @@ export default function Home() {
       const sections = gsap.utils.toArray<HTMLElement>('section:not(#hero):not(#projects)');
 
       sections.forEach((sec) => {
-        const elements = sec.querySelectorAll('h2:not(.scroll-reveal), h3, h4, p, li, img, a, button, .stagger-box');
+        const elements = Array.from(sec.querySelectorAll('h2:not(.scroll-reveal), h3, h4, p, li, img, a, button, .stagger-box')).filter(element => !element.hasAttribute('data-reveal-static'));
 
         if (elements.length > 0) {
           gsap.from(elements, {

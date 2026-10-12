@@ -14,17 +14,17 @@ export function LightBiteVisual() {
       {/* Editorial Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-white/10">
         <div>
-          <span className="font-sans text-[11px] font-medium uppercase tracking-widest text-white/50 block mb-1">
-            FIG. 01 — OPERATIONS & SUPPLY LEDGER
+          <span className="font-sans text-xs md:text-[11px] font-medium normal-case md:uppercase tracking-normal md:tracking-widest text-white/50 block mb-1">
+            Fig. 01 — Operations & supply ledger
           </span>
-          <h4 className="font-display text-base md:text-lg font-bold tracking-tight text-white uppercase">
+          <h4 className="font-display text-base md:text-lg font-bold tracking-tight text-white normal-case md:uppercase">
             LightBite Operational Matrix
           </h4>
         </div>
         <div className="flex items-center gap-2 self-start sm:self-auto">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.06] border border-white/10 text-[11px] font-sans tracking-wider text-white/80">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.06] border border-white/10 text-xs md:text-[11px] font-sans tracking-normal md:tracking-wider text-white/80">
             <span className="w-1.5 h-1.5 rounded-full bg-white" />
-            BANGALORE • PROFITABLE P&L
+            Bangalore • Profitable P&L
           </span>
         </div>
       </div>
@@ -32,49 +32,49 @@ export function LightBiteVisual() {
       {/* Hero Metric Ledger (Clean tabular numbers) */}
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 py-6 border-b border-white/10">
         <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/5 flex flex-col">
-          <span className="font-sans text-[10px] uppercase tracking-wider text-white/40 mb-1">
+          <span className="font-sans text-xs md:text-[10px] normal-case md:uppercase tracking-normal md:tracking-wider text-white/40 mb-1">
             01. Total Volume
           </span>
           <span className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white">
             300+
           </span>
-          <span className="text-xs text-white/60 mt-1 font-medium">
+          <span className="text-sm md:text-xs text-white/70 md:text-white/60 mt-1 font-medium">
             Unique customers served
           </span>
         </div>
 
         <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/5 flex flex-col">
-          <span className="font-sans text-[10px] uppercase tracking-wider text-white/40 mb-1">
+          <span className="font-sans text-xs md:text-[10px] normal-case md:uppercase tracking-normal md:tracking-wider text-white/40 mb-1">
             02. SKU Catalog
           </span>
           <span className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white">
             25+
           </span>
-          <span className="text-xs text-white/60 mt-1 font-medium">
+          <span className="text-sm md:text-xs text-white/70 md:text-white/60 mt-1 font-medium">
             Active managed SKUs
           </span>
         </div>
 
         <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/5 flex flex-col">
-          <span className="font-sans text-[10px] uppercase tracking-wider text-white/40 mb-1">
+          <span className="font-sans text-xs md:text-[10px] normal-case md:uppercase tracking-normal md:tracking-wider text-white/40 mb-1">
             03. Spoilage Rate
           </span>
           <span className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white">
             &lt; 4%
           </span>
-          <span className="text-xs text-white/60 mt-1 font-medium">
+          <span className="text-sm md:text-xs text-white/70 md:text-white/60 mt-1 font-medium">
             Waste via reorder ROP
           </span>
         </div>
 
         <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/5 flex flex-col">
-          <span className="font-sans text-[10px] uppercase tracking-wider text-white/40 mb-1">
+          <span className="font-sans text-xs md:text-[10px] normal-case md:uppercase tracking-normal md:tracking-wider text-white/40 mb-1">
             04. Fulfillment SLA
           </span>
           <span className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white">
             98.4%
           </span>
-          <span className="text-xs text-white/60 mt-1 font-medium">
+          <span className="text-sm md:text-xs text-white/70 md:text-white/60 mt-1 font-medium">
             On-time order dispatch
           </span>
         </div>
@@ -82,7 +82,7 @@ export function LightBiteVisual() {
 
       {/* Operational Architecture Schematic */}
       <div className="py-6 border-b border-white/10 flex flex-col gap-3">
-        <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-white/50 font-sans uppercase tracking-wider">
+        <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-white/50 font-sans normal-case md:uppercase tracking-normal md:tracking-wider">
           <span>Supply Chain Workflow</span>
           <span>End-to-End Cycle</span>
         </div>
@@ -96,13 +96,13 @@ export function LightBiteVisual() {
           ].map((item, idx) => (
             <div key={idx} className="p-3 rounded-lg bg-white/[0.02] border border-white/10 flex flex-col justify-between">
               <div>
-                <span className="font-sans text-[10px] font-bold text-white/40 block mb-1">
+                <span className="font-sans text-xs md:text-[10px] font-bold text-white/40 block mb-1">
                   {item.step}
                 </span>
-                <span className="font-display text-xs font-bold uppercase tracking-tight text-white block mb-1">
+                <span className="font-display text-sm md:text-xs font-bold normal-case md:uppercase tracking-tight text-white block mb-1">
                   {item.title}
                 </span>
-                <p className="text-xs text-white/65 leading-relaxed">
+                <p className="text-sm md:text-xs text-white/75 md:text-white/65 leading-relaxed">
                   {item.desc}
                 </p>
               </div>
@@ -118,7 +118,7 @@ export function LightBiteVisual() {
             type="button"
             aria-pressed={selectedSpec === "supply"}
             onClick={() => setSelectedSpec("supply")}
-            className={`min-h-11 px-3 py-2 rounded-lg font-sans uppercase tracking-wider text-[11px] transition-all cursor-pointer ${
+            className={`min-h-11 px-3 py-2 rounded-lg font-sans normal-case md:uppercase tracking-normal md:tracking-wider text-xs md:text-[11px] transition-all cursor-pointer ${
               selectedSpec === "supply"
                 ? "bg-white text-black font-bold"
                 : "bg-white/[0.05] text-white/60 hover:text-white"
@@ -130,7 +130,7 @@ export function LightBiteVisual() {
             type="button"
             aria-pressed={selectedSpec === "inventory"}
             onClick={() => setSelectedSpec("inventory")}
-            className={`min-h-11 px-3 py-2 rounded-lg font-sans uppercase tracking-wider text-[11px] transition-all cursor-pointer ${
+            className={`min-h-11 px-3 py-2 rounded-lg font-sans normal-case md:uppercase tracking-normal md:tracking-wider text-xs md:text-[11px] transition-all cursor-pointer ${
               selectedSpec === "inventory"
                 ? "bg-white text-black font-bold"
                 : "bg-white/[0.05] text-white/60 hover:text-white"
@@ -140,7 +140,7 @@ export function LightBiteVisual() {
           </button>
         </div>
 
-        <span className="font-sans text-[11px] text-white/40">
+        <span className="font-sans text-xs md:text-[11px] text-white/40">
           {selectedSpec === "supply"
             ? "Protocol: Daily Reorder Point (ROP) + Minimum Batch Size"
             : "Menu: 4 Core Categories across 25+ Active SKUs"}
@@ -161,17 +161,17 @@ export function NumeroUnoVisual() {
       {/* Editorial Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-white/10">
         <div>
-          <span className="font-sans text-[11px] font-medium uppercase tracking-widest text-white/50 block mb-1">
-            FIG. 02 — SEARCH & ATTRIBUTION MATRIX
+          <span className="font-sans text-xs md:text-[11px] font-medium normal-case md:uppercase tracking-normal md:tracking-widest text-white/50 block mb-1">
+            Fig. 02 — Search & attribution matrix
           </span>
-          <h4 className="font-display text-base md:text-lg font-bold tracking-tight text-white uppercase">
+          <h4 className="font-display text-base md:text-lg font-bold tracking-tight text-white normal-case md:uppercase">
             Numero Uno Digital Marketing Operations
           </h4>
         </div>
         <div className="flex items-center gap-2 self-start sm:self-auto">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.06] border border-white/10 text-[11px] font-sans tracking-wider text-white/80">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.06] border border-white/10 text-xs md:text-[11px] font-sans tracking-normal md:tracking-wider text-white/80">
             <span className="w-1.5 h-1.5 rounded-full bg-white" />
-            GA4 & META ADS ATTRIBUTION
+            GA4 & Meta Ads attribution
           </span>
         </div>
       </div>
@@ -179,49 +179,49 @@ export function NumeroUnoVisual() {
       {/* Hero Metric Ledger */}
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 py-6 border-b border-white/10">
         <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/5 flex flex-col">
-          <span className="font-sans text-[10px] uppercase tracking-wider text-white/40 mb-1">
+          <span className="font-sans text-xs md:text-[10px] normal-case md:uppercase tracking-normal md:tracking-wider text-white/40 mb-1">
             01. Content Produced
           </span>
           <span className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white">
             16+
           </span>
-          <span className="text-xs text-white/60 mt-1 font-medium">
+          <span className="text-sm md:text-xs text-white/70 md:text-white/60 mt-1 font-medium">
             SEO-optimized articles
           </span>
         </div>
 
         <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/5 flex flex-col">
-          <span className="font-sans text-[10px] uppercase tracking-wider text-white/40 mb-1">
+          <span className="font-sans text-xs md:text-[10px] normal-case md:uppercase tracking-normal md:tracking-wider text-white/40 mb-1">
             02. Creative Assets
           </span>
           <span className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white">
             7+
           </span>
-          <span className="text-xs text-white/60 mt-1 font-medium">
+          <span className="text-sm md:text-xs text-white/70 md:text-white/60 mt-1 font-medium">
             Figma & Canva visuals
           </span>
         </div>
 
         <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/5 flex flex-col">
-          <span className="font-sans text-[10px] uppercase tracking-wider text-white/40 mb-1">
+          <span className="font-sans text-xs md:text-[10px] normal-case md:uppercase tracking-normal md:tracking-wider text-white/40 mb-1">
             03. Core Clients
           </span>
           <span className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white">
             02
           </span>
-          <span className="text-xs text-white/60 mt-1 font-medium">
+          <span className="text-sm md:text-xs text-white/70 md:text-white/60 mt-1 font-medium">
             Fit24 & Vitalyears
           </span>
         </div>
 
         <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/5 flex flex-col">
-          <span className="font-sans text-[10px] uppercase tracking-wider text-white/40 mb-1">
+          <span className="font-sans text-xs md:text-[10px] normal-case md:uppercase tracking-normal md:tracking-wider text-white/40 mb-1">
             04. Tracking Tools
           </span>
           <span className="font-display text-2xl md:text-3xl font-bold tracking-tight text-white mt-1">
             GA4
           </span>
-          <span className="text-xs text-white/60 mt-1 font-medium">
+          <span className="text-sm md:text-xs text-white/70 md:text-white/60 mt-1 font-medium">
             & Google Business Profile
           </span>
         </div>
@@ -229,7 +229,7 @@ export function NumeroUnoVisual() {
 
       {/* Campaign Streams Architecture */}
       <div className="py-6 border-b border-white/10 flex flex-col gap-3">
-        <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-white/50 font-sans uppercase tracking-wider">
+        <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-white/50 font-sans normal-case md:uppercase tracking-normal md:tracking-wider">
           <span>Client Execution Streams</span>
           <span>Click to Inspect Strategy</span>
         </div>
@@ -244,17 +244,17 @@ export function NumeroUnoVisual() {
             }`}
           >
             <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-              <span className="font-sans text-[10px] font-bold uppercase tracking-wider text-white/50">
-                STREAM A • FITNESS & WELLNESS
+              <span className="font-sans text-xs md:text-[10px] font-bold normal-case md:uppercase tracking-normal md:tracking-wider text-white/50">
+                Stream A • Fitness & wellness
               </span>
-              <span className="text-[10px] font-sans px-2 py-0.5 rounded-full bg-white/10 text-white">
+              <span className="text-xs md:text-[10px] font-sans px-2 py-0.5 rounded-full bg-white/10 text-white">
                 8 Articles
               </span>
             </div>
-            <h5 className="font-display text-sm md:text-base font-bold text-white mb-1 uppercase">
+            <h5 className="font-display text-sm md:text-base font-bold text-white mb-1 normal-case md:uppercase">
               Fit24 SEO & On-Page Campaign
             </h5>
-            <p className="text-xs text-white/65 leading-relaxed">
+            <p className="text-sm md:text-xs text-white/75 md:text-white/65 leading-relaxed">
               Targeted high-intent local fitness queries. Structured keyword clusters in WordPress, crafted metadata, and designed social visual banners.
             </p>
           </div>
@@ -268,17 +268,17 @@ export function NumeroUnoVisual() {
             }`}
           >
             <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-              <span className="font-sans text-[10px] font-bold uppercase tracking-wider text-white/50">
-                STREAM B • EARLY EDUCATION
+              <span className="font-sans text-xs md:text-[10px] font-bold normal-case md:uppercase tracking-normal md:tracking-wider text-white/50">
+                Stream B • Early education
               </span>
-              <span className="text-[10px] font-sans px-2 py-0.5 rounded-full bg-white/10 text-white">
+              <span className="text-xs md:text-[10px] font-sans px-2 py-0.5 rounded-full bg-white/10 text-white">
                 8 Articles
               </span>
             </div>
-            <h5 className="font-display text-sm md:text-base font-bold text-white mb-1 uppercase">
+            <h5 className="font-display text-sm md:text-base font-bold text-white mb-1 normal-case md:uppercase">
               Vitalyears Organic Search Series
             </h5>
-            <p className="text-xs text-white/65 leading-relaxed">
+            <p className="text-sm md:text-xs text-white/75 md:text-white/65 leading-relaxed">
               Researched long-tail informational keywords for child development. Monitored organic search user paths and bounce rates in Google Analytics 4.
             </p>
           </div>
@@ -287,10 +287,10 @@ export function NumeroUnoVisual() {
 
       {/* Attribution Footer */}
       <div className="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-        <span className="font-sans text-[11px] text-white/50">
+        <span className="font-sans text-xs md:text-[11px] text-white/50">
           Workflow: Keyword Clustering ➔ Content Production ➔ Creative Testing ➔ GA4 Attribution
         </span>
-        <span className="font-sans text-[11px] text-white/40">
+        <span className="font-sans text-xs md:text-[11px] text-white/40">
           Dec 2025 — Mar 2026
         </span>
       </div>
@@ -344,24 +344,24 @@ export function ZeptoAssistVisual() {
       {/* Editorial Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-white/10">
         <div>
-          <span className="font-sans text-[11px] font-medium uppercase tracking-widest text-white/50 block mb-1">
-            FIG. 03 — AI SYSTEM ARCHITECTURE & PRD SPECIFICATION
+          <span className="font-sans text-xs md:text-[11px] font-medium normal-case md:uppercase tracking-normal md:tracking-widest text-white/50 block mb-1">
+            Fig. 03 — AI system architecture & PRD specification
           </span>
-          <h4 className="font-display text-base md:text-lg font-bold tracking-tight text-white uppercase">
+          <h4 className="font-display text-base md:text-lg font-bold tracking-tight text-white normal-case md:uppercase">
             ZeptoAssist Quick-Commerce Support Triage
           </h4>
         </div>
         <div className="flex items-center gap-2 self-start sm:self-auto">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.06] border border-white/10 text-[11px] font-sans tracking-wider text-white/80">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.06] border border-white/10 text-xs md:text-[11px] font-sans tracking-normal md:tracking-wider text-white/80">
             <span className="w-1.5 h-1.5 rounded-full bg-white" />
-            IIT ROORKEE iHUB × MASAI CASE STUDY
+            IIT Roorkee iHUB × Masai case study
           </span>
         </div>
       </div>
 
       {/* Interactive System Pipeline Schematics */}
       <div className="py-6 border-b border-white/10 flex flex-col gap-3">
-        <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-white/50 font-sans uppercase tracking-wider">
+        <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-white/50 font-sans normal-case md:uppercase tracking-normal md:tracking-wider">
           <span>RAG Pipeline Architecture</span>
           <span>Select Node to Inspect PRD Spec</span>
         </div>
@@ -383,22 +383,22 @@ export function ZeptoAssistVisual() {
               >
                 <div>
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                    <span className={`font-sans text-[10px] font-bold ${isSelected ? "text-black/60" : "text-white/40"}`}>
+                    <span className={`font-sans text-xs md:text-[10px] font-bold ${isSelected ? "text-black/60" : "text-white/40"}`}>
                       {node.code}
                     </span>
-                    <span className={`text-[9px] font-sans uppercase px-1.5 py-0.5 rounded ${
+                    <span className={`text-xs md:text-[9px] font-sans normal-case md:uppercase px-1.5 py-0.5 rounded ${
                       isSelected ? "bg-black/10 text-black font-semibold" : "bg-white/10 text-white/60"
                     }`}>
                       Stage {node.id + 1}
                     </span>
                   </div>
-                  <h6 className={`font-display text-xs md:text-sm font-bold uppercase tracking-tight leading-snug mb-1 ${
+                  <h6 className={`font-display text-sm font-bold normal-case md:uppercase tracking-tight leading-snug mb-1 ${
                     isSelected ? "text-black" : "text-white"
                   }`}>
                     {node.name}
                   </h6>
                 </div>
-                <span className={`text-[10px] font-sans mt-3 ${isSelected ? "text-black/70" : "text-white/40"}`}>
+                <span className={`text-sm md:text-[10px] font-sans mt-3 ${isSelected ? "text-black/70" : "text-white/40"}`}>
                   {node.layer}
                 </span>
               </button>
@@ -412,16 +412,16 @@ export function ZeptoAssistVisual() {
         <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-sans text-white/50">
           <span className="flex items-center gap-2 text-white font-medium">
             <span className="w-1.5 h-1.5 rounded-full bg-white" />
-            NODE SPECIFICATION: {nodes[activeNode].name} ({nodes[activeNode].code})
+            Node specification: {nodes[activeNode].name} ({nodes[activeNode].code})
           </span>
           <span>Layer: {nodes[activeNode].layer}</span>
         </div>
 
         <div className="p-4 rounded-xl bg-white/[0.02] border border-white/10 flex flex-col gap-2">
-          <span className="font-sans text-[10px] uppercase tracking-wider text-white/40">
+          <span className="font-sans text-xs md:text-[10px] normal-case md:uppercase tracking-normal md:tracking-wider text-white/40">
             PRD Functional Requirement
           </span>
-          <p className="text-xs sm:text-sm text-white/85 leading-relaxed font-sans">
+          <p className="text-sm text-white/85 leading-relaxed font-sans">
             {nodes[activeNode].spec}
           </p>
           <div className="mt-2 pt-2 border-t border-white/5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs font-sans text-white/50">
@@ -433,10 +433,10 @@ export function ZeptoAssistVisual() {
 
       {/* Footer Specs */}
       <div className="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-        <span className="font-sans text-[11px] text-white/50">
+        <span className="font-sans text-xs md:text-[11px] text-white/50">
           Prototype Stack: Lovable.dev • Claude API • Make.com Webhooks
         </span>
-        <span className="font-sans text-[11px] text-white/40">
+        <span className="font-sans text-xs md:text-[11px] text-white/40">
           AI Product Management Case Study & Prototype
         </span>
       </div>

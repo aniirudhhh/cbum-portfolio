@@ -6,6 +6,8 @@ import { useTheme } from "next-themes";
 import { useLenis } from "lenis/react";
 import {
   Search,
+  FileText,
+  Download,
   ArrowRight,
   Copy,
   Mail,
@@ -166,6 +168,20 @@ export function CommandPalette() {
       },
 
       // Quick Actions
+      {
+        id: "act-view-resume", title: "View résumé", subtitle: "Open Shivam’s résumé as a PDF", category: "Actions", icon: FileText,
+        action: () => { setIsOpen(false); window.open("/shivam-resume.pdf", "_blank", "noopener,noreferrer"); }
+      },
+      {
+        id: "act-download-resume", title: "Download résumé", subtitle: "Save a PDF copy", category: "Actions", icon: Download,
+        action: () => {
+          setIsOpen(false);
+          const link = document.createElement("a");
+          link.href = "/shivam-resume.pdf";
+          link.download = "Shivam-Resume.pdf";
+          document.body.appendChild(link); link.click(); link.remove();
+        }
+      },
       {
         id: "act-copy-email",
         title: "Copy Email Address",

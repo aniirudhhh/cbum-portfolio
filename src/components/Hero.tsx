@@ -116,7 +116,7 @@ export function Hero() {
             Bringing hands-on experience in entrepreneurship, marketing and operations to product and growth problems.
           </p>
           <MagneticButton className="mt-5">
-            <a href="#projects" className="inline-flex rounded-[2px] bg-foreground px-6 py-3 text-sm font-semibold text-background hover:bg-black/80 dark:hover:bg-white/80 transition-colors"><ScrambleLabel>View my work</ScrambleLabel></a>
+            <a href="/shivam-resume.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex rounded-[2px] bg-foreground px-6 py-3 text-sm font-semibold text-background hover:bg-black/80 dark:hover:bg-white/80 transition-colors"><ScrambleLabel>View résumé</ScrambleLabel></a>
           </MagneticButton>
         </div>
 

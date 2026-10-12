@@ -59,7 +59,7 @@ export function Footer() {
             <span className="text-[10px] font-bold uppercase tracking-widest text-white/60 mb-2">Socials</span>
             <a href="https://linkedin.com/in/shivamkr026" target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:text-white/70 transition-colors">LinkedIn</a>
             <a href="mailto:shivamkr026@gmail.com" className="text-sm font-medium hover:text-white/70 transition-colors">Email</a>
-            <a href="mailto:shivamkr026@gmail.com?subject=Resume%20request" className="text-sm font-medium hover:text-white/70 transition-colors">Request résumé</a>
+            <a href="/shivam-resume.pdf" target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:text-white/70 transition-colors">View résumé</a>
           </div>
           
           <div className="flex flex-col gap-4">

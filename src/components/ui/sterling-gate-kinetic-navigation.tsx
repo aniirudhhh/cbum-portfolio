@@ -4,10 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { CustomEase } from "gsap/CustomEase";
 import { useLenis } from "lenis/react";
-import { ArrowUpRight, Plus, Search } from "lucide-react";
+import { ArrowUpRight, Plus } from "lucide-react";
 import { CustomCursor } from "@/components/CustomCursor";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { openCommandPalette } from "@/components/CommandPalette";
 
 const links = [
   { href: "#projects", label: "Our work", detail: "Case studies" },
@@ -45,6 +44,7 @@ export function KineticNavigation() {
     const stack = dialog.current.querySelector(".kinetic-panel-stack");
     const panel = dialog.current.querySelector<HTMLElement>(".kinetic-panel");
     const icon = dialog.current.querySelector(".kinetic-close-icon");
+    gsap.set(panel, { autoAlpha: 1, clipPath: "inset(0 0 0 100%)" });
     gsap.set(stack, { xPercent: 0 });
     gsap.set(layers, { xPercent: 101 });
     gsap.set(items, { x: 0, y: 0, yPercent: 140, rotate: 10, opacity: 1 });
@@ -53,16 +53,17 @@ export function KineticNavigation() {
     gsap.set(icon, { rotate: 0 });
     if (panel) panel.scrollTop = 0;
     dialog.current.showModal();
-    dialog.current.querySelector<HTMLButtonElement>(".kinetic-close")?.focus({ preventScroll: true });
     if (panel) panel.scrollTop = 0;
     lenis?.stop();
     setOpen(true);
     timeline.current = gsap.timeline({ defaults: { ease: "kineticMain", duration: reduce ? 0 : 0.7 } })
       .to(scrim, { autoAlpha: 1 }, 0)
       .to(layers, { xPercent: 0, duration: reduce ? 0 : 0.575, stagger: reduce ? 0 : 0.12 }, 0)
+      .to(panel, { clipPath: "inset(0 0 0 0%)", duration: reduce ? 0 : 0.575 }, reduce ? 0 : (layers.length - 1) * 0.12)
       .to(items, { yPercent: 0, rotate: 0, stagger: reduce ? 0 : 0.05 }, reduce ? 0 : 0.35)
       .to(fadeTargets, { autoAlpha: 1, yPercent: 0, stagger: reduce ? 0 : 0.04 }, reduce ? 0 : 0.55)
-      .to(icon, { rotate: 315 }, 0);
+      .to(icon, { rotate: 315 }, 0)
+      .call(() => dialog.current?.querySelector<HTMLButtonElement>(".kinetic-close")?.focus({ preventScroll: true }), [], reduce ? 0 : 0.815);
 
   }
 
@@ -116,11 +117,9 @@ export function KineticNavigation() {
               </a>
             </div>)}
           </nav>
-          <div data-menu-fade className="relative z-10 mt-8 pt-5 border-t border-border flex items-center justify-between gap-4">
-            <button type="button" className="min-h-11 flex items-center gap-2 text-sm" onClick={() => close(openCommandPalette)}><Search size={16} /> Commands & search</button>
+          <div data-menu-fade className="relative z-10 mt-8 pt-5 border-t border-border flex justify-end">
             <ThemeToggle side="top" />
           </div>
-          <p data-menu-fade className="relative z-10 mt-3 text-xs text-muted">Product · Growth · Analytics</p>
         </div>
       </div>
     </dialog>

@@ -1,5 +1,6 @@
 "use client";
 
+import { ResumeLinks } from "@/components/ResumeLinks";
 import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal/ScrollReveal";
@@ -48,6 +49,7 @@ export function Contact() {
             </div>
             <span className="font-semibold text-xs tracking-wider uppercase text-foreground">shivamkr026@gmail.com</span>
           </a>
+          <ResumeLinks />
           <LiveTime />
         </div>
       </div>

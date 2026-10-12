@@ -150,7 +150,7 @@ export function FeaturedProjects() {
     <section ref={containerRef} id="projects" className="py-14 md:py-24 border-t border-[rgba(0,0,0,0.08)]">
       {/* Header */}
       <div className="flex flex-col mb-10 md:mb-24">
-        <div className="px-4 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-xs font-bold uppercase tracking-wider mb-8 self-start bg-black/5 dark:bg-white/10 text-foreground">
+        <div className="px-4 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-xs font-bold normal-case md:uppercase tracking-normal md:tracking-wider mb-8 self-start bg-black/5 dark:bg-white/10 text-foreground">
           Case Studies & Flagship Work
         </div>
         <ScrollReveal
@@ -178,13 +178,13 @@ export function FeaturedProjects() {
               {/* Left Column (Sticky on Desktop) */}
               <div className="w-full min-w-0 lg:w-[38%] lg:sticky lg:top-32 flex flex-col gap-4 sm:gap-6">
                 <div>
-                  <span className="font-sans text-[11px] font-bold uppercase tracking-widest text-muted block mb-2">
+                  <span className="font-sans text-xs md:text-[11px] font-bold normal-case md:uppercase tracking-normal md:tracking-widest text-muted block mb-2">
                     {project.badge}
                   </span>
-                  <h3 className="font-display text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black tracking-tighter uppercase mb-2">
+                  <h3 className="font-display text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black tracking-tighter normal-case md:uppercase mb-2">
                     {project.title}
                   </h3>
-                  <p className="font-sans text-xs md:text-sm font-semibold tracking-wider uppercase text-foreground/60">
+                  <p className="font-sans text-sm font-semibold tracking-normal md:tracking-wider normal-case md:uppercase text-foreground/60">
                     {project.role} • {project.timeline}
                   </p>
                 </div>
@@ -194,7 +194,7 @@ export function FeaturedProjects() {
                   {project.tags.map((tag, tIdx) => (
                     <span
                       key={tIdx}
-                      className="px-2.5 py-1 bg-black/5 dark:bg-white/10 text-foreground/80 rounded-[2px] font-sans text-[10px] md:text-[11px] font-semibold tracking-wider uppercase"
+                      className="px-2.5 py-1 bg-black/5 dark:bg-white/10 text-foreground/80 rounded-[2px] font-sans text-xs md:text-[11px] font-semibold tracking-normal md:tracking-wider normal-case md:uppercase"
                     >
                       {tag}
                     </span>
@@ -206,7 +206,7 @@ export function FeaturedProjects() {
                   <button
                     type="button"
                     onClick={() => setActiveModalProject(project)}
-                    className="inline-flex w-full sm:w-auto justify-center min-h-11 items-center gap-2.5 px-6 py-3.5 rounded-[2px] bg-foreground text-background text-xs font-bold uppercase tracking-widest hover:opacity-85 transition-opacity cursor-pointer group"
+                    className="inline-flex w-full sm:w-auto justify-center min-h-11 items-center gap-2.5 px-6 py-3.5 rounded-[2px] bg-foreground text-background text-xs font-bold normal-case md:uppercase tracking-normal md:tracking-widest hover:opacity-85 transition-opacity cursor-pointer group"
                   >
                     <ScrambleLabel>Read Full Case Study</ScrambleLabel>
                     <ArrowRight size={13} className="transition-transform group-hover:translate-x-1 duration-200" />
@@ -223,7 +223,7 @@ export function FeaturedProjects() {
                 {/* Narrative Breakdown Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 bg-card-soft p-4 sm:p-6 lg:p-8 rounded-2xl md:rounded-[24px] thin-border">
                   <div className="flex flex-col gap-2">
-                    <span className="text-[11px] font-sans font-bold tracking-widest uppercase text-muted border-b border-border pb-2">
+                    <span className="text-xs md:text-[11px] font-sans font-bold tracking-normal md:tracking-widest normal-case md:uppercase text-muted border-b border-border pb-2">
                       01. The Problem
                     </span>
                     <p className="text-sm md:text-base font-normal text-foreground/80 leading-relaxed">
@@ -232,7 +232,7 @@ export function FeaturedProjects() {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <span className="text-[11px] font-sans font-bold tracking-widest uppercase text-muted border-b border-border pb-2">
+                    <span className="text-xs md:text-[11px] font-sans font-bold tracking-normal md:tracking-widest normal-case md:uppercase text-muted border-b border-border pb-2">
                       02. The Execution
                     </span>
                     <p className="text-sm md:text-base font-normal text-foreground/80 leading-relaxed">
@@ -242,13 +242,13 @@ export function FeaturedProjects() {
 
                   <div className="flex flex-col gap-2 md:col-span-2 pt-3 border-t border-border">
                     <div className="flex flex-col items-start sm:flex-row sm:items-center justify-between gap-2">
-                      <span className="text-[11px] font-sans font-bold tracking-widest uppercase text-muted">
+                      <span className="text-xs md:text-[11px] font-sans font-bold tracking-normal md:tracking-widest normal-case md:uppercase text-muted">
                         03. The Impact & Evidence
                       </span>
                       <button
                         type="button"
                         onClick={() => setActiveModalProject(project)}
-                        className="min-h-11 inline-flex items-center text-xs font-sans font-bold uppercase tracking-wider text-foreground underline underline-offset-4 hover:opacity-70 transition-opacity cursor-pointer"
+                        className="min-h-11 inline-flex items-center text-xs font-sans font-bold normal-case md:uppercase tracking-normal md:tracking-wider text-foreground underline underline-offset-4 hover:opacity-70 transition-opacity cursor-pointer"
                       >
                         Inspect PRD & Full Notes →
                       </button>
@@ -277,7 +277,7 @@ export function FeaturedProjects() {
             <div className="flex flex-col gap-3 text-left font-sans">
               {/* Overview */}
               <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10">
-                <span className="block font-display text-[11px] font-bold uppercase tracking-wider text-white/50 mb-1">
+                <span className="block font-display text-xs md:text-[11px] font-bold normal-case md:uppercase tracking-normal md:tracking-wider text-white/50 mb-1">
                   Executive Summary
                 </span>
                 <p className="text-sm text-white/85 leading-relaxed">
@@ -301,12 +301,12 @@ export function FeaturedProjects() {
 
               {/* Key Takeaways */}
               <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10">
-                <span className="block font-display text-[11px] font-bold uppercase tracking-wider text-white/50 mb-2">
+                <span className="block font-display text-xs md:text-[11px] font-bold normal-case md:uppercase tracking-normal md:tracking-wider text-white/50 mb-2">
                   Key Retrospective Learnings
                 </span>
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
                   {activeModalProject.deepDive.takeaways.map((item, tIdx) => (
-                    <li key={tIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-white/80 leading-relaxed">
+                    <li key={tIdx} className="flex items-start gap-2.5 text-sm text-white/80 leading-relaxed">
                       <CheckCircle2 size={15} className="text-white/70 shrink-0 mt-0.5" />
                       <span>{item}</span>
                     </li>
@@ -315,7 +315,7 @@ export function FeaturedProjects() {
               </div>
 
               {activeModalProject.id === "zeptoassist" && (
-                <p className="text-[11px] font-sans text-white/40 border-t border-white/10 pt-3">
+                <p className="text-xs md:text-[11px] font-sans text-white/40 border-t border-white/10 pt-3">
                   * Note: Case study completed under IIT Roorkee iHUB x Masai AI PM training. Focuses on product discovery, RAG system design, and functional prototype validation.
                 </p>
               )}

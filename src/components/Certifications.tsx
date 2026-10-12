@@ -30,7 +30,7 @@ export function Certifications() {
             key={index}
             onClick={() => setActiveItem(cert)}
             spotlightColor="var(--color-border)"
-            className="group/card cursor-pointer rounded-2xl md:rounded-[20px] p-4 md:p-8 thin-border bg-card-soft hover:-translate-y-1 hover:shadow-lg transition-all duration-300"
+            className="group/card cursor-pointer rounded-2xl md:rounded-[20px] p-4 md:p-8 thin-border bg-card-soft text-foreground hover:-translate-y-1 hover:shadow-lg transition-all duration-300"
           >
             <div className="flex flex-col h-full relative">
               <div className="absolute top-0 right-0 w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center opacity-0 -translate-x-4 group-hover/card:opacity-100 group-hover/card:translate-x-0 transition-all duration-300">
@@ -39,10 +39,10 @@ export function Certifications() {
               <div className="w-10 h-10 rounded-full bg-background thin-border flex items-center justify-center mb-3 md:mb-6 text-foreground group-hover/card:scale-105 transition-transform">
                 <Award size={20} strokeWidth={2} />
               </div>
-              <h3 className="text-xl md:text-2xl font-bold tracking-tight leading-tight mb-2 group-hover/card:opacity-80 transition-opacity">
+              <h3 data-reveal-static className="text-foreground text-xl md:text-2xl font-bold tracking-tight leading-tight mb-2">
                 {cert.title}
               </h3>
-              <p className="text-sm md:text-base font-medium text-muted">
+              <p data-reveal-static className="text-sm md:text-base font-medium text-foreground/75">
                 {cert.issuer}
               </p>
             </div>
