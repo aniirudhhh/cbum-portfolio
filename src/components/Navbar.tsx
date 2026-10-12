@@ -1,87 +1,44 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useLenis } from "lenis/react";
-import { MagneticButton } from "@/components/MagneticButton";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { NavbarWordmark } from "@/components/NavbarWordmark";
+import { ScrambleLabel } from "@/components/ui/text-scramble";
 
-const links = [
-  { href: "#projects", label: "Work" },
-  { href: "#about", label: "About" },
-  { href: "#experience", label: "Experience" },
-  { href: "#education", label: "Education" },
-];
+import { useEffect, useState } from "react";
+import { KineticNavigation } from "@/components/ui/sterling-gate-kinetic-navigation";
+import { openCommandPalette } from "@/components/CommandPalette";
+import { Search } from "lucide-react";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef<HTMLDialogElement>(null);
-  const toggleRef = useRef<HTMLButtonElement>(null);
-  const lenis = useLenis();
-
-  function closeMenu() {
-    menuRef.current?.close();
-  }
-
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (!isOpen) return;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    lenis?.stop();
-    const desktop = window.matchMedia("(min-width: 768px)");
-    const onResize = () => { if (desktop.matches) menuRef.current?.close(); };
-    desktop.addEventListener("change", onResize);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      lenis?.start();
-      desktop.removeEventListener("change", onResize);
-    };
-  }, [isOpen, lenis]);
-
   return (
     <>
       <nav aria-label="Main navigation" className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-background/90 backdrop-blur-md py-3 md:py-4 shadow-sm" : "bg-transparent py-4 md:py-8"}`}>
         <div className="max-w-[1480px] mx-auto px-4 md:px-8 lg:px-12 flex justify-between items-center">
-          <a href="#hero" aria-label="Shivam — home" className="font-bold text-lg tracking-tight">SHIVAM</a>
-          <div className="hidden md:flex items-center gap-8 lg:gap-12 text-sm font-medium">
-            {links.map(link => <a key={link.href} href={link.href} className="hover:opacity-60 transition-opacity">{link.label}</a>)}
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="hidden md:block"><ThemeToggle /></div>
-            <div className="hidden md:block"><MagneticButton>
-              <a href="#contact" className="inline-flex items-center justify-center bg-foreground text-background font-bold tracking-widest uppercase text-xs px-6 py-3 rounded-[2px] hover:bg-black/80 dark:hover:bg-white/80 transition-colors">Let&apos;s Talk</a>
-            </MagneticButton></div>
-            <div className="md:hidden"><MagneticButton>
-              <button ref={toggleRef} type="button" aria-label="Open menu" aria-expanded={isOpen} aria-controls="mobile-menu" onClick={() => { menuRef.current?.showModal(); setIsOpen(true); }} className="flex flex-col justify-center items-end gap-[5px] w-11 h-11">
-                <span className="h-0.5 w-6 bg-foreground" />
-                <span className="h-0.5 w-4 bg-foreground" />
-                <span className="h-0.5 w-6 bg-foreground" />
-              </button>
-            </MagneticButton></div>
+          <NavbarWordmark />
+          <div className="flex items-center gap-3 md:gap-4">
+            {/* Quick Command Palette Trigger */}
+            <button
+              type="button"
+              onClick={() => openCommandPalette()}
+              aria-label="Open command palette"
+              className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 border border-black/5 dark:border-white/10 text-xs text-foreground/70 hover:text-foreground transition-all cursor-pointer"
+            >
+              <Search size={12} className="text-muted" />
+              <span className="hidden lg:inline text-[11px] font-sans"><ScrambleLabel>Search</ScrambleLabel></span>
+              <kbd className="font-sans font-medium text-[10px] px-1.5 py-0.2 rounded bg-black/5 dark:bg-white/10 text-foreground/70 border border-black/5 dark:border-white/10">⌘K</kbd>
+            </button>
+
+            <KineticNavigation />
           </div>
         </div>
       </nav>
-      <dialog ref={menuRef} id="mobile-menu" aria-label="Navigation menu" data-lenis-prevent onClose={() => { setIsOpen(false); toggleRef.current?.focus(); }} className="mobile-menu bg-background text-foreground p-6 sm:p-12">
-        <div className="flex items-center justify-between mb-12">
-          <span className="font-bold text-lg">SHIVAM</span>
-          <button type="button" onClick={closeMenu} className="min-h-11 px-3 font-semibold">Close ✕</button>
-        </div>
-        <nav aria-label="Mobile navigation" className="flex flex-col gap-6">
-          {links.map(link => (
-            <a key={link.href} href={link.href} onClick={closeMenu} className="text-4xl sm:text-5xl font-black uppercase tracking-tighter hover:opacity-60">{link.label}</a>
-          ))}
-        </nav>
-        <div className="mt-10 flex items-center justify-between gap-4 border-t border-border pt-6">
-          <ThemeToggle />
-          <a href="#contact" onClick={closeMenu} className="inline-flex items-center justify-center bg-foreground text-background font-bold tracking-widest uppercase text-xs px-6 py-3 rounded-[2px] hover:opacity-80 transition-opacity">Let&apos;s Talk</a>
-        </div>
-      </dialog>
+
     </>
   );
 }

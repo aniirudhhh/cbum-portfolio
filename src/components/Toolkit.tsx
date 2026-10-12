@@ -79,7 +79,7 @@ export function Toolkit() {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-12 md:py-24 border-t border-[rgba(0,0,0,0.08)] overflow-hidden">
+    <section id="toolkit" ref={containerRef} className="py-12 md:py-24 border-t border-[rgba(0,0,0,0.08)] overflow-hidden">
       <div className="flex flex-col mb-10 md:mb-16">
         <div className="px-4 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-xs font-bold uppercase tracking-wider mb-8 self-start bg-black/5 dark:bg-white/10 text-foreground">
           Toolkit

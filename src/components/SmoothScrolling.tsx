@@ -1,15 +1,21 @@
 "use client";
 
-import { useEffect, useSyncExternalStore } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
 import { ReactLenis, useLenis } from "lenis/react";
 import { useStartupComplete } from "@/lib/startup";
 
 function StartupScrollGuard() {
   const lenis = useLenis();
   const ready = useStartupComplete();
+  const hasInitialized = useRef(false);
+
   useEffect(() => {
     if (!lenis) return;
-    lenis.scrollTo(0, { immediate: true, force: true });
+    (window as any).__lenis = lenis;
+    if (!hasInitialized.current) {
+      hasInitialized.current = true;
+      lenis.scrollTo(0, { immediate: true, force: true });
+    }
     if (ready) lenis.start();
     else lenis.stop();
   }, [lenis, ready]);

@@ -39,7 +39,7 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .thin-border {
@@ -96,6 +96,11 @@ html[data-starting="true"] body { overflow-anchor: none; }
   .loader-overlay[data-leaving="true"] { animation-duration: 1ms; }
 }
 
+/* Keep viewport width stable when overlays stop smooth scrolling. */
+html {
+  scrollbar-gutter: stable;
+}
+
 html.lenis, html.lenis body {
   height: auto;
 }
@@ -105,8 +110,10 @@ html.lenis, html.lenis body {
 .lenis.lenis-smooth [data-lenis-prevent] {
   overscroll-behavior: contain;
 }
-.lenis.lenis-stopped {
-  overflow: hidden;
+/* Lenis blocks wheel/touch input while stopped. Changing root overflow here
+   removes the scrollbar and triggers ScrollTrigger resize/refresh at scroll 0. */
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overscroll-behavior: none;
 }
 .lenis.lenis-smooth iframe {
   pointer-events: none;
@@ -224,3 +231,71 @@ section[id] { scroll-margin-top: 6rem; }
   .robot-question-control { margin-top: -8px; min-height: 32px; }
   .robot-question-form input { font-size: 16px; }
 }
+
+/* Two aligned scripts share the actual animated cursor's circular reveal. */
+.navbar-wordmark { --reveal-x: -100px; --reveal-y: -100px; --reveal-radius: 0px; }
+.wordmark-base, .wordmark-reveal { white-space: nowrap; flex-shrink: 0; }
+.wordmark-language { opacity: 0; pointer-events: none; }
+.navbar-wordmark:hover .wordmark-language, .navbar-wordmark:focus-visible .wordmark-language { opacity: 1; }
+.wordmark-reveal { visibility: hidden; clip-path: circle(0 at 50% 50%); pointer-events: none; }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .navbar-wordmark:hover .wordmark-reveal {
+    visibility: visible;
+    clip-path: circle(var(--reveal-radius) at var(--reveal-x) var(--reveal-y));
+  }
+  .navbar-wordmark:hover .wordmark-base {
+    mask-image: radial-gradient(circle at var(--reveal-x) var(--reveal-y), transparent 0, transparent var(--reveal-radius), black calc(var(--reveal-radius) + 0.5px));
+    -webkit-mask-image: radial-gradient(circle at var(--reveal-x) var(--reveal-y), transparent 0, transparent var(--reveal-radius), black calc(var(--reveal-radius) + 0.5px));
+  }
+}
+.navbar-wordmark:focus-visible .wordmark-base { visibility: hidden; }
+.navbar-wordmark:focus-visible .wordmark-base, .wordmark-reveal { white-space: nowrap; flex-shrink: 0; }
+.wordmark-language { opacity: 0; pointer-events: none; }
+.navbar-wordmark:hover .wordmark-language, .navbar-wordmark:focus-visible .wordmark-language { opacity: 1; }
+.wordmark-reveal { clip-path: none; }
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .navbar-wordmark:active .wordmark-base { visibility: hidden; }
+  .navbar-wordmark:active .wordmark-base, .wordmark-reveal { white-space: nowrap; flex-shrink: 0; }
+.wordmark-language { opacity: 0; pointer-events: none; }
+.navbar-wordmark:hover .wordmark-language, .navbar-wordmark:focus-visible .wordmark-language { opacity: 1; }
+.wordmark-reveal { clip-path: none; }
+}
+
+.robot-action-row { display: flex; align-items: center; justify-content: center; gap: 6px; }
+.robot-action-row .robot-greet { margin: 0; }
+.robot-quiet {
+  pointer-events: auto; flex-shrink: 0; display: grid; place-items: center;
+  width: 36px; height: 36px; padding: 0; border-radius: 50%;
+  background: var(--background); color: var(--muted); border: 1px solid var(--border);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07); cursor: pointer;
+  transition: background 180ms ease, color 180ms ease;
+}
+.robot-quiet:hover, .robot-quiet[aria-pressed="true"] { color: var(--foreground); background: var(--card-soft); }
+@media (max-width: 767px) {
+  .robot-action-row { width: max-content; position: relative; left: 50%; transform: translateX(-50%); gap: 6px; }
+  .robot-quiet { width: 32px; height: 32px; }
+}
+
+.kinetic-dialog { position: fixed; inset: 0; margin: 0; width: 100%; max-width: none; height: 100dvh; max-height: none; padding: 0; border: 0; background: transparent; color: var(--foreground); overflow: hidden; }
+.kinetic-dialog::backdrop { background: transparent; }
+.kinetic-scrim { position: absolute; inset: 0; width: 100%; height: 100%; background: rgba(0,0,0,.5); backdrop-filter: blur(5px); }
+.kinetic-panel-stack { position: absolute; inset: 0 0 0 auto; width: min(650px,100%); }
+.kinetic-layer { position: absolute; inset: 0; }
+.kinetic-layer-one { background: #a78bfa; }
+.kinetic-layer-two { background: #7059ad; }
+.kinetic-layer-three { background: var(--background); }
+.kinetic-panel { position: absolute; inset: 0; background: transparent; padding: clamp(24px,5vw,56px); display: flex; flex-direction: column; overflow-y: auto; overscroll-behavior: contain; }
+.kinetic-link { display: flex; align-items: center; gap: 18px; padding: 12px 0; min-height: 56px; font-family: var(--font-display); font-size: clamp(28px,5vw,56px); line-height: 1.12; font-weight: 700; letter-spacing: -.04em; transition: color .2s; }
+.kinetic-link:hover, .kinetic-link:focus-visible { color: #8b5cf6; }
+.kinetic-number { font-family: var(--font-sans); font-size: 11px; font-weight: 500; letter-spacing: 0; color: var(--muted); }
+.kinetic-arrow { flex-shrink: 0; margin-left: auto; opacity: 0; transition: opacity .2s; }
+.kinetic-link:hover .kinetic-arrow, .kinetic-link:focus-visible .kinetic-arrow { opacity: 1; }
+.kinetic-shape { position: absolute; inset: 20% -15% 10% 30%; pointer-events: none; opacity: .14; }
+.kinetic-shape i { position: absolute; width: 180px; height: 180px; background: #8b5cf6; border-radius: 50%; transition: transform .5s, border-radius .5s; }
+.kinetic-shape i:nth-child(2) { top: 35%; left: 25%; background: #d695c9; }
+.kinetic-shape i:nth-child(3) { top: 60%; left: -20%; width: 110px; height: 110px; }
+.kinetic-shape-1 i { transform: rotate(45deg) scale(.9); border-radius: 20%; }
+.kinetic-shape-2 i { transform: scale(.6); border-radius: 10%; }
+.kinetic-shape-3 i { transform: rotate(-35deg) scale(1.2,.5); border-radius: 35%; }
+.kinetic-shape-4 i { transform: rotate(35deg) scale(.3,1.5); border-radius: 5%; }
+@media (max-height: 600px) { .kinetic-panel { padding-block: 16px; } .kinetic-link { font-size: 28px; padding-block: 6px; } }

@@ -1,5 +1,8 @@
 "use client";
 
+import { MultilingualGreeting } from "@/components/MultilingualGreeting";
+import { ScrambleLabel } from "@/components/ui/text-scramble";
+
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import Image from "next/image";
@@ -29,8 +32,7 @@ export function Hero() {
       // Separate depth layers keep pointer motion independent of the entrance animation.
       const background = hero.querySelector(".hero-depth-background");
       const portraitLayer = hero.querySelector(".hero-depth-portrait");
-      const name = hero.querySelector(".hero-depth-name");
-      gsap.set([background, portraitLayer, name], { willChange: "transform", force3D: true });
+      gsap.set([background, portraitLayer], { willChange: "transform", force3D: true });
       gsap.set(portraitLayer, { transformPerspective: 1200, transformOrigin: "50% 65%" });
 
       const backgroundX = gsap.quickTo(background, "x", { duration: 1.2, ease: "power3.out" });
@@ -39,8 +41,6 @@ export function Hero() {
       const portraitY = gsap.quickTo(portraitLayer, "y", { duration: 0.9, ease: "power3.out" });
       const tiltX = gsap.quickTo(portraitLayer, "rotationX", { duration: 1.1, ease: "power3.out" });
       const tiltY = gsap.quickTo(portraitLayer, "rotationY", { duration: 1.1, ease: "power3.out" });
-      const nameX = gsap.quickTo(name, "x", { duration: 1, ease: "power3.out" });
-      const nameY = gsap.quickTo(name, "y", { duration: 1, ease: "power3.out" });
 
       const moveLayers = (x: number, y: number) => {
         backgroundX(x * -36);
@@ -49,8 +49,6 @@ export function Hero() {
         portraitY(y * 14);
         tiltX(y * -1.8);
         tiltY(x * 2.5);
-        nameX(x * -6);
-        nameY(y * -4);
       };
       const onPointerMove = (event: PointerEvent) => {
         if (event.pointerType !== "mouse") return;
@@ -81,7 +79,7 @@ export function Hero() {
       {/* Background Cursive Text */}
       <div className="absolute top-[105px] mt-0 md:top-[25%] md:-mt-[40px] w-full flex justify-center pointer-events-none z-0 px-4">
         <p aria-hidden="true" className="hero-cursive font-display text-[3.25rem] sm:text-[5rem] md:text-[clamp(5rem,18vw,16rem)] italic font-light text-foreground/30 tracking-tighter leading-none whitespace-nowrap">
-          <span className="hero-depth-background inline-block">Hey there.</span>
+          <span className="hero-depth-background inline-block"><MultilingualGreeting active={startupComplete} /></span>
         </p>
       </div>
 
@@ -118,7 +116,7 @@ export function Hero() {
             Bringing hands-on experience in entrepreneurship, marketing and operations to product and growth problems.
           </p>
           <MagneticButton className="mt-5">
-            <a href="#projects" className="inline-flex rounded-[2px] bg-foreground px-6 py-3 text-sm font-semibold text-background hover:bg-black/80 dark:hover:bg-white/80 transition-colors">View my work</a>
+            <a href="#projects" className="inline-flex rounded-[2px] bg-foreground px-6 py-3 text-sm font-semibold text-background hover:bg-black/80 dark:hover:bg-white/80 transition-colors"><ScrambleLabel>View my work</ScrambleLabel></a>
           </MagneticButton>
         </div>
 

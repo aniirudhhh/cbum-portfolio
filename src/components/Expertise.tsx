@@ -49,7 +49,7 @@ export function Expertise() {
           >
             <div className="flex flex-col justify-between h-full">
               <div>
-                <h3 className="text-xl md:text-2xl font-bold tracking-tight mb-2 md:mb-4 group-hover/card:text-blue-500 dark:group-hover/card:text-blue-400 transition-colors">{item.title}</h3>
+                <h3 className="text-xl md:text-2xl font-bold tracking-tight mb-2 md:mb-4 group-hover/card:opacity-85 transition-opacity">{item.title}</h3>
                 <p className={`text-sm md:text-base font-medium leading-relaxed transition-colors ${item.dark ? "text-white/80 group-hover/card:text-white" : "text-foreground/80 group-hover/card:text-foreground"}`}>
                   {item.description}
                 </p>
@@ -70,12 +70,13 @@ export function Expertise() {
       <InfoModal
         isOpen={!!activeItem}
         onClose={() => setActiveItem(null)}
+        badge="Area of Expertise"
         title={activeItem?.title || ""}
         detail={
           <div className="flex flex-col gap-4">
-            <p className="text-xl leading-relaxed">{activeItem?.description}</p>
-            <div className="mt-4 p-4 rounded-xl bg-white/10 border border-white/20">
-              <p className="text-blue-100 text-sm font-medium">
+            <p className="text-base sm:text-lg text-white/90 leading-relaxed font-medium">{activeItem?.description}</p>
+            <div className="mt-2 p-4 sm:p-5 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-sm">
+              <p className="text-white/80 text-sm sm:text-base font-normal leading-relaxed">
                 {activeItem?.detail}
               </p>
             </div>

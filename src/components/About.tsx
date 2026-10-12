@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect, useSyncExternalStore } from "react";
+import { useState } from "react";
 import { metrics } from "@/data/portfolio";
 import ScrollReveal from "@/components/ScrollReveal/ScrollReveal";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
-import { X, ArrowRight } from "lucide-react";
-import { createPortal } from "react-dom";
+import { ArrowRight } from "lucide-react";
+import { InfoModal } from "@/components/InfoModal";
 
 const aboutData = [
   {
@@ -28,21 +28,8 @@ const aboutData = [
   }
 ];
 
-const subscribeMounted = () => () => {};
-
 export function About() {
   const [activeModal, setActiveModal] = useState<number | null>(null);
-  const mounted = useSyncExternalStore(subscribeMounted, () => true, () => false);
-
-  useEffect(() => {
-    if (activeModal === null) return;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = previousOverflow;
-    };
-  }, [activeModal]);
-
   const activeItem = aboutData.find(item => item.id === activeModal);
 
   return (
@@ -83,7 +70,7 @@ export function About() {
               }`}
             >
               <div className="flex items-center justify-between mb-2 md:mb-3">
-                <h3 className="text-lg md:text-xl font-bold tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                <h3 className="text-lg md:text-xl font-bold tracking-tight text-foreground group-hover:opacity-80 transition-opacity">
                   {item.title}
                 </h3>
                 <div className="w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
@@ -113,49 +100,13 @@ export function About() {
         </div>
       </div>
 
-      {/* Modal Portal */}
-      {mounted && activeItem && createPortal(
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
-          <div
-            className="absolute inset-0 bg-background/80 backdrop-blur-sm transition-opacity"
-            onClick={() => setActiveModal(null)}
-          />
-          <div
-            className="relative w-full max-w-2xl bg-blue-600 text-white rounded-3xl p-8 sm:p-12 shadow-2xl overflow-hidden shadow-blue-900/20"
-            style={{ animation: 'modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards' }}
-          >
-            {/* Decorative background circle */}
-            <div className="absolute -top-24 -right-24 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-black opacity-10 rounded-full blur-3xl pointer-events-none" />
-
-            <button
-              onClick={() => setActiveModal(null)}
-              className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-black/10 hover:bg-black/20 text-white transition-colors"
-              aria-label="Close modal"
-            >
-              <X size={20} />
-            </button>
-
-            <div className="relative z-10">
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-6">
-                {activeItem.title}
-              </h2>
-              <div className="w-12 h-1 bg-white/20 mb-8 rounded-full" />
-              <p className="text-lg sm:text-xl font-medium leading-relaxed text-blue-50">
-                {activeItem.detail}
-              </p>
-            </div>
-          </div>
-
-          <style dangerouslySetInnerHTML={{__html: `
-            @keyframes modalSlideUp {
-              from { opacity: 0; transform: translateY(20px) scale(0.95); }
-              to { opacity: 1; transform: translateY(0) scale(1); }
-            }
-          `}} />
-        </div>,
-        document.body
-      )}
+      <InfoModal
+        isOpen={!!activeItem}
+        onClose={() => setActiveModal(null)}
+        badge="About Shivam"
+        title={activeItem?.title || ""}
+        detail={<p>{activeItem?.detail}</p>}
+      />
     </section>
   );
 }

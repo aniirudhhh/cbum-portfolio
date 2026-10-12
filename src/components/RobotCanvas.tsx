@@ -1,18 +1,20 @@
 "use client";
 
+import { Bell, BellOff } from "lucide-react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { ContactShadows, Environment, Float, Lightformer } from "@react-three/drei";
 import { Suspense, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { ReactNode } from "react";
 import { ACESFilmicToneMapping, Group, MathUtils } from "three";
 import { RobotModel } from "./RobotModel";
+import { useAstraScrollMessage } from "@/lib/use-astra-scroll-message";
 import { answerPortfolioQuestion } from "@/lib/portfolio-answer";
 
 const greetings = [
   { expression: "happy", text: "Hey there! So happy you stopped by." },
   { expression: "surprised", text: "Oh! A visitor! Come explore Shivam’s work." },
   { expression: "heart", text: "Sending a little robot love. Thanks for being here!" },
-  { expression: "sad", text: "Leaving already? I’ll miss you. Come say hello again!" },
+  { expression: "sad", text: "My dramatic face. No actual robot feelings were harmed." },
 ] as const;
 
 const defaultRotation: [number, number, number] = [0.04, -0.25, 0];
@@ -42,8 +44,9 @@ function subscribeMotion(callback: () => void) {
 export function RobotCanvas({ url = "/astra_robot.glb" }: { url?: string }) {
   const reducedMotion = useSyncExternalStore(subscribeMotion, () => window.matchMedia("(prefers-reduced-motion: reduce)").matches, () => true);
   const [interaction, setInteraction] = useState(0);
+  const [waveInteraction, setWaveInteraction] = useState(0);
   const [greetingIndex, setGreetingIndex] = useState(-1);
-  const [idleExpressionIndex, setIdleExpressionIndex] = useState(0);
+  const [scrollExpression, setScrollExpression] = useState<"happy" | "sad">("happy");
   const [answer, setAnswer] = useState("");
   const [draft, setDraft] = useState("");
   const [inputOpen, setInputOpen] = useState(false);
@@ -54,6 +57,12 @@ export function RobotCanvas({ url = "/astra_robot.glb" }: { url?: string }) {
   const [messageKind, setMessageKind] = useState<"greeting" | "answer">("greeting");
   const [speaking, setSpeaking] = useState(false);
   const [minimized, setMinimized] = useState(false);
+  const [quiet, setQuiet] = useState(false);
+  const [robotEngaged, setRobotEngaged] = useState(false);
+  useEffect(() => {
+    try { setQuiet(sessionStorage.getItem("astra-quiet") === "true"); } catch { /* Storage is optional. */ }
+  }, []);
+  const scrollMessage = useAstraScrollMessage(quiet || minimized || speaking || thinking || inputOpen || inputClosing || robotEngaged);
   const [rotation, setRotation] = useState<[number, number, number]>(defaultRotation);
   const drag = useRef<{ pointerId: number; x: number; y: number; rotation: [number, number, number]; moved: boolean } | null>(null);
   const [headLook, setHeadLook] = useState<[number, number]>([0, 0]);
@@ -81,22 +90,26 @@ export function RobotCanvas({ url = "/astra_robot.glb" }: { url?: string }) {
   }, [inputClosing, reducedMotion]);
 
   useEffect(() => {
-    if (speaking || minimized || reducedMotion) return;
-    let timeout: number;
-    function scheduleExpression() {
-      timeout = window.setTimeout(() => {
-        setIdleExpressionIndex((previous) => {
-          const choices = greetings.map((_, index) => index).filter((index) => index !== previous);
-          return choices[Math.floor(Math.random() * choices.length)];
-        });
-        scheduleExpression();
-      }, 3000 + Math.random() * 3000);
-    }
-    scheduleExpression();
-    return () => window.clearTimeout(timeout);
-  }, [speaking, minimized, reducedMotion]);
+    if (minimized || reducedMotion) return;
+    let timeout: number | undefined;
+    let previousY = window.scrollY;
+    const onScroll = () => {
+      const currentY = window.scrollY;
+      if (Math.abs(currentY - previousY) < 1) return;
+      previousY = currentY;
+      setScrollExpression("happy");
+      window.clearTimeout(timeout);
+      timeout = window.setTimeout(() => setScrollExpression("sad"), 2000);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.clearTimeout(timeout);
+    };
+  }, [minimized, reducedMotion]);
 
   function greet() {
+    setWaveInteraction(value => value + 1);
     requestVersion.current += 1;
     setThinking(false);
     setMessageKind("greeting");
@@ -135,11 +148,13 @@ export function RobotCanvas({ url = "/astra_robot.glb" }: { url?: string }) {
         <button className="robot-restore" onClick={() => setMinimized(false)} aria-label="Show robot companion">✦</button>
       ) : (
         <>
-          <div className="robot-speech" role="status" aria-live="polite" data-visible={speaking}>
-            {speaking && interaction > 0 ? (messageKind === "answer" ? answer : greeting.text) : ""}
+          <div className="robot-speech" role={speaking ? "status" : undefined} aria-live={speaking ? "polite" : "off"} data-visible={speaking || !!scrollMessage}>
+            {speaking && interaction > 0 ? (messageKind === "answer" ? answer : greeting.text) : scrollMessage}
           </div>
           <button className="robot-minimize" onClick={() => { setMinimized(true); setSpeaking(false); setInputOpen(false); }} aria-label="Minimize robot companion">−</button>
           <div className="robot-stage" role="button" tabIndex={0} aria-label="Click robot for an expression and greeting" title="Hover to look around. Drag to rotate, or use the left and right arrow keys."
+          onPointerEnter={() => setRobotEngaged(true)}
+          onFocus={() => setRobotEngaged(true)}
           onPointerDown={(event) => {
             if (event.button !== 0) return;
             setHeadLook([0, 0]);
@@ -167,9 +182,9 @@ export function RobotCanvas({ url = "/astra_robot.glb" }: { url?: string }) {
             ]);
           }}
           onPointerUp={() => setRotation(defaultRotation)}
-          onPointerLeave={() => { setRotation(defaultRotation); setHeadLook([0, 0]); }}
+          onPointerLeave={() => { setRobotEngaged(false); setRotation(defaultRotation); setHeadLook([0, 0]); }}
           onLostPointerCapture={() => setRotation(defaultRotation)}
-          onBlur={() => { setRotation(defaultRotation); setHeadLook([0, 0]); }}
+          onBlur={() => { setRobotEngaged(false); setRotation(defaultRotation); setHeadLook([0, 0]); }}
           onPointerCancel={() => {
             if (drag.current) drag.current.moved = true;
             setHeadLook([0, 0]);
@@ -201,7 +216,7 @@ export function RobotCanvas({ url = "/astra_robot.glb" }: { url?: string }) {
                 </Environment>
                 <RobotRotation rotation={rotation} reducedMotion={reducedMotion}>
                   <Float enabled={!reducedMotion} speed={1.8} rotationIntensity={0.08} floatIntensity={0.16} floatingRange={[-0.04, 0.04]}>
-                    <RobotModel headLook={headLook} url={url} position={[0, 0.2, 0]} interaction={interaction} expression={thinking ? "surprised" : speaking ? (messageKind === "answer" ? "happy" : greeting.expression) : greetings[idleExpressionIndex].expression} expressionActive={speaking || !reducedMotion} reducedMotion={reducedMotion} />
+                    <RobotModel waveInteraction={waveInteraction} headLook={headLook} url={url} position={[0, 0.2, 0]} interaction={interaction} expression={thinking ? "surprised" : speaking ? (messageKind === "answer" ? "happy" : greeting.expression) : scrollMessage ? "happy" : scrollExpression} expressionActive={speaking || !reducedMotion} reducedMotion={reducedMotion} />
                   </Float>
                 </RobotRotation>
                 <ContactShadows frames={1} position={[0, -1.2, 0]} opacity={0.35} scale={5} blur={2.8} far={3} resolution={128} color="#173b35" />
@@ -217,9 +232,18 @@ export function RobotCanvas({ url = "/astra_robot.glb" }: { url?: string }) {
                 <button type="submit" disabled={!draft.trim() || thinking} aria-label="Send question">{thinking ? "Wait…" : "Ask"}</button>
               </form>
             ) : (
+              <div className="robot-action-row">
               <button type="button" className="robot-greet robot-about" onClick={() => { setInputClosing(false); setInputOpen(true); }} aria-expanded={inputOpen}>
                 <span>Ask about me</span>
               </button>
+          <button type="button" className="robot-quiet" aria-pressed={quiet} aria-label={quiet ? "Enable Astra’s automatic messages" : "Mute Astra’s automatic messages"}
+            title={quiet ? "Enable automatic messages" : "Mute automatic messages"}
+            onClick={() => setQuiet(previous => {
+              const next = !previous;
+              try { sessionStorage.setItem("astra-quiet", String(next)); } catch { /* Storage is optional. */ }
+              return next;
+            })}>{quiet ? <BellOff size={16} aria-hidden="true" /> : <Bell size={16} aria-hidden="true" />}</button>
+              </div>
             )}
           </div>
         </>

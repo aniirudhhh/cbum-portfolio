@@ -8,7 +8,7 @@ import gsap from "gsap";
 
 const subscribeMounted = () => () => {};
 
-export function ThemeToggle() {
+export function ThemeToggle({ side = "bottom" }: { side?: "top" | "bottom" }) {
   const mounted = useSyncExternalStore(subscribeMounted, () => true, () => false);
   const { theme, setTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
@@ -29,11 +29,11 @@ export function ThemeToggle() {
     if (!menuRef.current) return;
     if (isOpen) {
       gsap.fromTo(menuRef.current,
-        { opacity: 0, y: -10, scale: 0.95 },
+        { opacity: 0, y: side === "top" ? 10 : -10, scale: 0.95 },
         { opacity: 1, y: 0, scale: 1, duration: 0.2, ease: "power2.out" }
       );
     }
-  }, [isOpen]);
+  }, [isOpen, side]);
 
   if (!mounted) {
     return <div className="inline-flex px-5 py-3" />;
@@ -61,7 +61,7 @@ export function ThemeToggle() {
       {isOpen && (
         <div
           ref={menuRef}
-          className="absolute left-0 md:left-auto md:right-0 mt-2 w-36 rounded-xl bg-background/90 backdrop-blur-xl border border-black/10 dark:border-white/10 shadow-xl overflow-hidden z-50 origin-top-right"
+          className={`absolute right-0 w-36 rounded-xl bg-background/90 backdrop-blur-xl border border-black/10 dark:border-white/10 shadow-xl overflow-hidden z-50 ${side === "top" ? "bottom-full mb-2 origin-bottom-right" : "top-full mt-2 origin-top-right"}`}
         >
           <div className="p-1 flex flex-col gap-1">
             {themes.map((t) => (

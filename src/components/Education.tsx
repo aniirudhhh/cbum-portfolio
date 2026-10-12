@@ -43,7 +43,7 @@ export function Education() {
               <span className="text-xs font-bold text-muted mb-2 tracking-wider uppercase">
                 {edu.graduated || edu.years}
               </span>
-              <h3 className="text-xl md:text-2xl font-bold tracking-tight leading-tight mb-2 group-hover/card:text-blue-600 dark:group-hover/card:text-blue-400 transition-colors">
+              <h3 className="text-xl md:text-2xl font-bold tracking-tight leading-tight mb-2 group-hover/card:opacity-80 transition-opacity">
                 {edu.degree}
               </h3>
               <p className="text-sm md:text-base font-medium text-foreground/80 mb-3 md:mb-6">
@@ -80,27 +80,30 @@ export function Education() {
       <InfoModal
         isOpen={!!activeItem}
         onClose={() => setActiveItem(null)}
+        badge="Education"
         title={activeItem?.degree || ""}
         detail={
-          <div className="flex flex-col gap-4">
-            <h4 className="text-2xl font-medium text-white mb-4">{activeItem?.institution}</h4>
-            <div className="grid grid-cols-2 gap-4 mb-6">
-              <div className="p-4 rounded-xl bg-white/10 border border-white/20">
-                <span className="block text-xs font-bold uppercase tracking-wider text-blue-200 mb-1">Timeline</span>
-                <span className="text-lg font-medium text-white">{activeItem?.graduated || activeItem?.years}</span>
+          <div className="flex flex-col gap-5">
+            <h4 className="text-xl sm:text-2xl font-semibold text-white/90">{activeItem?.institution}</h4>
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-sm">
+                <span className="block text-[11px] font-bold uppercase tracking-wider text-white/50 mb-1">Timeline</span>
+                <span className="text-base sm:text-lg font-medium text-white">{activeItem?.graduated || activeItem?.years}</span>
               </div>
               {(activeItem?.cgpa || activeItem?.stream) && (
-                <div className="p-4 rounded-xl bg-white/10 border border-white/20">
-                  <span className="block text-xs font-bold uppercase tracking-wider text-blue-200 mb-1">
+                <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-sm">
+                  <span className="block text-[11px] font-bold uppercase tracking-wider text-white/50 mb-1">
                     {activeItem?.cgpa ? "CGPA" : "Stream"}
                   </span>
-                  <span className="text-lg font-medium text-white">{activeItem?.cgpa || activeItem?.stream}</span>
+                  <span className="text-base sm:text-lg font-medium text-white">{activeItem?.cgpa || activeItem?.stream}</span>
                 </div>
               )}
             </div>
-            <p className="text-blue-100 text-sm font-medium">
-              {activeItem?.detail}
-            </p>
+            <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/10">
+              <p className="text-white/80 text-sm sm:text-base font-normal leading-relaxed">
+                {activeItem?.detail}
+              </p>
+            </div>
           </div>
         }
       />

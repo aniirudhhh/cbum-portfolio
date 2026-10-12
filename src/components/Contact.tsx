@@ -11,9 +11,10 @@ export function Contact() {
   async function copyEmail() {
     try {
       await navigator.clipboard.writeText("shivamkr026@gmail.com");
-      setCopyStatus("Email address copied.");
+      setCopyStatus("✓ Email copied to clipboard");
+      setTimeout(() => setCopyStatus(""), 3000);
     } catch {
-      setCopyStatus("Select and copy the email address shown above.");
+      setCopyStatus("Select and copy: shivamkr026@gmail.com");
     }
   }
 

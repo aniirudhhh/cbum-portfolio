@@ -10,13 +10,14 @@ import { markRobotReady } from "@/lib/startup";
 type RobotModelProps = ThreeElements["group"] & {
   url?: string;
   interaction?: number;
+  waveInteraction?: number;
   expression?: "happy" | "sad" | "surprised" | "heart";
   expressionActive?: boolean;
   reducedMotion?: boolean;
   headLook?: [number, number];
 };
 
-export function RobotModel({ url = "/astra_robot.glb", interaction = 0, expression = "happy", expressionActive = false, reducedMotion = false, headLook = [0, 0], ...props }: RobotModelProps) {
+export function RobotModel({ url = "/astra_robot.glb", interaction = 0, waveInteraction = 0, expression = "happy", expressionActive = false, reducedMotion = false, headLook = [0, 0], ...props }: RobotModelProps) {
   const group = useRef<Group>(null);
   const renderedFrames = useRef(0);
   const { scene: source, animations } = useGLTF(url);
@@ -63,13 +64,25 @@ export function RobotModel({ url = "/astra_robot.glb", interaction = 0, expressi
   // Use the welcome's body gestures while click-selected expressions control the face.
   const gestures = useMemo(() => animations.map((clip) => new AnimationClip(
     clip.name, clip.duration,
-    clip.tracks.filter((track) => !track.name.includes("morphTargetInfluences") && !track.name.startsWith("Astra_Root.") && !track.name.startsWith("Head_Control.")),
+    clip.tracks.filter((track) => !track.name.includes("morphTargetInfluences") && !track.name.startsWith("Astra_Root.") && !track.name.startsWith("Head_Control.") && !track.name.startsWith("Shoulder_Control_-1.") && !track.name.startsWith("Wrist_Control_-1.")),
   )), [animations]);
   const { actions, mixer } = useAnimations(gestures, group);
   const head = useMemo(() => {
     const object = scene.getObjectByName("Head_Control");
     return { object, rest: object?.quaternion.clone(), angles: new Euler(), offset: new Quaternion() };
   }, [scene]);
+
+  const rightArm = useMemo(() => {
+    const shoulder = scene.getObjectByName("Shoulder_Control_-1");
+    const wrist = scene.getObjectByName("Wrist_Control_-1");
+    return { shoulder, wrist, shoulderRest: shoulder?.quaternion.clone(), wristRest: wrist?.quaternion.clone(), offset: new Quaternion(), angles: new Euler() };
+  }, [scene]);
+  const wave = useRef({ elapsed: 0, active: false });
+  useEffect(() => {
+    if (!waveInteraction || reducedMotion) return;
+    wave.current = { elapsed: 0, active: true };
+    invalidate();
+  }, [waveInteraction, reducedMotion, invalidate]);
 
   useEffect(() => () => {
     materials.forEach((material) => material.dispose());
@@ -96,6 +109,27 @@ export function RobotModel({ url = "/astra_robot.glb", interaction = 0, expressi
       );
       head.offset.setFromEuler(head.angles);
       head.object.quaternion.copy(head.rest).multiply(head.offset);
+    }
+    if (rightArm.shoulder && rightArm.shoulderRest && rightArm.wrist && rightArm.wristRest) {
+      const gesture = wave.current;
+      if (reducedMotion) gesture.active = false;
+      if (gesture.active) {
+        gesture.elapsed += Math.min(delta, 0.1);
+        const t = gesture.elapsed;
+        const smooth = (value: number) => { const p = MathUtils.clamp(value, 0, 1); return p * p * (3 - 2 * p); };
+        const lift = t < 0.5 ? smooth(t / 0.5) : t < 1.9 ? 1 : 1 - smooth((t - 1.9) / 0.5);
+        rightArm.angles.set(0, 0, -MathUtils.degToRad(100) * lift);
+        rightArm.offset.setFromEuler(rightArm.angles);
+        rightArm.shoulder.quaternion.copy(rightArm.shoulderRest).multiply(rightArm.offset);
+        const sway = t >= 0.5 && t < 1.9 ? Math.sin((t - 0.5) * Math.PI * 5) * MathUtils.degToRad(22) : 0;
+        rightArm.angles.set(0, sway, 0);
+        rightArm.offset.setFromEuler(rightArm.angles);
+        rightArm.wrist.quaternion.copy(rightArm.wristRest).multiply(rightArm.offset);
+        if (t >= 2.4) gesture.active = false;
+      } else {
+        rightArm.shoulder.quaternion.copy(rightArm.shoulderRest);
+        rightArm.wrist.quaternion.copy(rightArm.wristRest);
+      }
     }
     for (const graphic of graphics) {
       const targetIndex = graphic.morphTargetDictionary?.[expression];

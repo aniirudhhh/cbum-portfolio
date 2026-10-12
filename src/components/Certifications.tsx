@@ -36,10 +36,10 @@ export function Certifications() {
               <div className="absolute top-0 right-0 w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center opacity-0 -translate-x-4 group-hover/card:opacity-100 group-hover/card:translate-x-0 transition-all duration-300">
                 <ArrowRight size={14} className="text-foreground" />
               </div>
-              <div className="w-10 h-10 rounded-full bg-background thin-border flex items-center justify-center mb-3 md:mb-6 text-foreground group-hover/card:text-blue-500 transition-colors">
+              <div className="w-10 h-10 rounded-full bg-background thin-border flex items-center justify-center mb-3 md:mb-6 text-foreground group-hover/card:scale-105 transition-transform">
                 <Award size={20} strokeWidth={2} />
               </div>
-              <h3 className="text-xl md:text-2xl font-bold tracking-tight leading-tight mb-2 group-hover/card:text-blue-600 dark:group-hover/card:text-blue-400 transition-colors">
+              <h3 className="text-xl md:text-2xl font-bold tracking-tight leading-tight mb-2 group-hover/card:opacity-80 transition-opacity">
                 {cert.title}
               </h3>
               <p className="text-sm md:text-base font-medium text-muted">
@@ -53,17 +53,18 @@ export function Certifications() {
       <InfoModal
         isOpen={!!activeItem}
         onClose={() => setActiveItem(null)}
+        badge="Certification"
         title={activeItem?.title || ""}
         detail={
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-5">
             <div className="flex items-center gap-3">
-              <span className="px-3 py-1 bg-white/20 rounded-full text-sm font-bold tracking-wider uppercase">
+              <span className="px-3 py-1 bg-white/10 border border-white/15 rounded-full text-xs font-bold tracking-wider uppercase text-white/70">
                 Issuer
               </span>
-              <span className="text-xl font-medium text-blue-50">{activeItem?.issuer}</span>
+              <span className="text-lg sm:text-xl font-medium text-white/90">{activeItem?.issuer}</span>
             </div>
-            <div className="p-4 rounded-xl bg-white/10 border border-white/20">
-              <p className="text-blue-100 text-sm font-medium">
+            <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-sm">
+              <p className="text-white/80 text-sm sm:text-base font-normal leading-relaxed">
                 {activeItem?.detail}
               </p>
             </div>

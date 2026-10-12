@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { Montserrat, Noto_Sans_Devanagari } from "next/font/google";
 import "./globals.css";
 import { SmoothScrolling } from "@/components/SmoothScrolling";
 import { CustomCursor } from "@/components/CustomCursor";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Loader } from "@/components/Loader";
 import { DeferredRobot } from "@/components/DeferredRobot";
+import { CommandPalette } from "@/components/CommandPalette";
+
+const wordmarkHindi = Noto_Sans_Devanagari({ subsets: ["devanagari"], weight: "600", variable: "--font-wordmark-hindi", display: "swap" });
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -42,13 +45,16 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={`${montserrat.variable} antialiased font-sans text-foreground bg-background selection:bg-foreground selection:text-background`}>
+      <body className={`${montserrat.variable} ${wordmarkHindi.variable} antialiased font-sans text-foreground bg-background selection:bg-foreground selection:text-background`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Loader />
           <a href="#main-content" className="skip-link">Skip to content</a>
           <CustomCursor />
           <DeferredRobot />
-          <SmoothScrolling>{children}</SmoothScrolling>
+          <SmoothScrolling>
+            <CommandPalette />
+            {children}
+          </SmoothScrolling>
         </ThemeProvider>
       </body>
     </html>
