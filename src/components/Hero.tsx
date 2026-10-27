@@ -103,7 +103,7 @@ export function Hero() {
         {/* Left / Top Text */}
         <div className="hero-text-left mt-0 md:absolute md:bottom-[8%] md:left-12 lg:left-24 flex flex-col items-start mb-2 md:mb-0">
           <h1 className="hero-depth-name font-display text-[3.5rem] leading-[0.9] md:text-[clamp(4rem,7.5vw,6.5rem)] font-bold tracking-tight md:leading-[0.85] uppercase text-foreground">
-            I AM <br /> SHIVAM
+            I'M <br /> SHIVAM
           </h1>
         </div>
 
